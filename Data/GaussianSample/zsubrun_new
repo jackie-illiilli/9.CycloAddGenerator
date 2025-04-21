@@ -1,0 +1,12 @@
+pwd=`pwd`
+file_names=`ls $pwd`
+for file_name in $file_names:
+do
+    files=`ls $pwd/$file_name`
+    for file in $files
+    do
+        cd $pwd/$file_name/$file
+        echo $file
+        qsub $pwd/$file_name/$file/run_new.sh
+    done
+done
