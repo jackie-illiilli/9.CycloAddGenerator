@@ -28,8 +28,8 @@ New_des = ['diene_area_0', 'diene_area_1', 'diene_area_2', 'diene_area_3', 'dien
 'ene_area_0', 'ene_area_1', 'ene_area_2', 'ene_area_3', 'ene_area_4', 'ene_area_5', 'ene_area_6', 'ene_area_7', ]
 
 
-def calc_rdkit_mf(smiles):
-    return Tool.clean_nan(Chem.RDKFingerprint(Chem.MolFromSmiles(smiles)))
+# def calc_rdkit_mf(smiles):
+#     return Tool.clean_nan(Chem.RDKFingerprint(Chem.MolFromSmiles(smiles)))
 
 def descriptor_generator(dfs, des_map=None, mf_des=True, with_product=False, y_name=None, is_3d_map=False):
     input_array = []
@@ -59,39 +59,6 @@ def descriptor_generator(dfs, des_map=None, mf_des=True, with_product=False, y_n
                     product_smiles = "%s___%s" % (product_smiles, " ".join([str(each) for each in _title]))
                 product = list(des_map[product_smiles])
                 temp_list += product
-            # if qm_des: 
-            #     diene_atoma, diene_atomb, ene_atomc, ene_atomd = [
-            #         int(each) for each in title.split(" ")[:4]]
-            #     diene_key = "%.5d %d %d %d" % (
-            #         diene_id, 1, diene_atoma, diene_atomb)
-            #     ene_key = "%.5d %d %d %d" % (ene_id, 0, ene_atomc, ene_atomd)
-            #     diene_property = target_map[diene_key]
-            #     ene_property = target_map[ene_key]
-            #     temp_list += diene_property + ene_property
-            # if calc_area:
-            #     diene_id = df.iloc[each]["Diene_Index"]
-            #     ene_id = df.iloc[each]["Ene_Index"]
-            #     title = df.iloc[each]["Title"]
-            #     title = [int(each) for each in title.split()]
-            #     diene_csv_id = smiles_ids_list.index(diene_id)
-            #     ene_csv_id = smiles_ids_list.index(ene_id)
-            #     diene_conf_id, ene_conf_id = smiles_csv["Stable_conf_id"][diene_csv_id], smiles_csv["Stable_conf_id"][ene_csv_id]
-            #     diene_G, diene_E, ene_G, ene_E = smiles_csv["G/Hatree"][diene_csv_id], smiles_csv["E/Hatree"][diene_csv_id], smiles_csv["G/Hatree"][ene_csv_id], smiles_csv["E/Hatree"][ene_csv_id]
-            #     diene_mol = Chem.MolFromMolFile(os.path.join(mol_dir, "mol", f"smilesid_{diene_id:05}.mol"), removeHs=False)
-            #     ene_mol = Chem.MolFromMolFile(os.path.join(mol_dir, "mol", f"smilesid_{ene_id:05}.mol"), removeHs=False)
-            #     ene_log = logfile_process.Logfile(os.path.join(mol_dir, "mol_dft_eng", f"smilesid_{ene_id:05}_{ene_conf_id:04}.log"))
-            #     diene_log = logfile_process.Logfile(os.path.join(mol_dir, "mol_dft_eng", f"smilesid_{diene_id:05}_{diene_conf_id:04}.log"))
-            #     diene_symbol_list, diene_position = diene_log.symbol_list, diene_log.first_atom_position
-            #     diene_mol = xtb_process.xtb_to_mol(diene_mol, [diene_symbol_list], [diene_position], 1)
-            #     ene_symbol_list, ene_position = ene_log.symbol_list, ene_log.first_atom_position
-            #     ene_mol = xtb_process.xtb_to_mol(ene_mol, [ene_symbol_list], [ene_position], 1)
-            #     areas = Diene_Ene_Process(diene_mol, ene_mol, title, calc_bv=calc_bv)
-            #     temp_list += areas
-            #     if calc_HB:
-            #         diene_charge = cycle_process.format_change.read_chg_file(os.path.join(mol_dir, "mol_dft_eng_m06", f"smilesid_{diene_id:05}_{diene_conf_id:04}.chg"))['charge'].to_list()
-            #         ene_charge = cycle_process.format_change.read_chg_file(os.path.join(mol_dir, "mol_dft_eng_m06", f"smilesid_{ene_id:05}_{ene_conf_id:04}.chg"))['charge'].to_list()
-            #         hb = H_bond_count(diene_mol, ene_mol, title, hf_charges=np.array(diene_charge + ene_charge))
-            #         temp_list += hb
             input_array.append(temp_list)
             idxs.append(each)
     return np.array(input_array), np.array(result_array), idxs

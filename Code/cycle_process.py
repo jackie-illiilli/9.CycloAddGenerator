@@ -9,12 +9,6 @@ from rdkit.Chem.AllChem import AssignStereochemistryFrom3D
 from rdkit.Geometry import Point3D
 
 
-op_dir = "../files/"
-atom_num = [None, "H", "He", "Li", "Be", "B", "C", "N", "O", "F",
-            "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca",
-            "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr"]
-
-
 def mol_add_Hs(molfile):
     """给molfile文件补氢
 
@@ -27,40 +21,40 @@ def mol_add_Hs(molfile):
     Chem.MolToMolFile(mol, molfile)
 
 
-def group_atoms(coordinates, threshold):
-    """
-    划分原子成若干组。
+# def group_atoms(coordinates, threshold):
+#     """
+#     划分原子成若干组。
     
-    参数：
-    - coordinates: N x 3 的 NumPy 数组，表示 N 个原子的坐标。
-    - threshold: 阈值，表示两个原子之间的距离不超过该值时，这两个原子应该被划分到同一组中。
+#     参数：
+#     - coordinates: N x 3 的 NumPy 数组，表示 N 个原子的坐标。
+#     - threshold: 阈值，表示两个原子之间的距离不超过该值时，这两个原子应该被划分到同一组中。
     
-    返回值：
-    - 一个包含若干组的列表，每一组由若干原子的序号构成。
-    """
-    # 构建 KD 树
-    from scipy.spatial import KDTree
-    tree = KDTree(coordinates)
+#     返回值：
+#     - 一个包含若干组的列表，每一组由若干原子的序号构成。
+#     """
+#     # 构建 KD 树
+#     from scipy.spatial import KDTree
+#     tree = KDTree(coordinates)
 
-    # 查找近邻点
-    groups = []
-    visited = set()
-    for i in range(len(coordinates)):
-        if i in visited:
-            continue
-        group = []
-        queue = [i]
-        while queue:
-            j = queue.pop(0)
-            if j in visited:
-                continue
-            visited.add(j)
-            group.append(j)
-            neighbors = tree.query_ball_point(coordinates[j], threshold)
-            queue.extend([k for k in neighbors if k not in visited])
-        groups.append(group)
+#     # 查找近邻点
+#     groups = []
+#     visited = set()
+#     for i in range(len(coordinates)):
+#         if i in visited:
+#             continue
+#         group = []
+#         queue = [i]
+#         while queue:
+#             j = queue.pop(0)
+#             if j in visited:
+#                 continue
+#             visited.add(j)
+#             group.append(j)
+#             neighbors = tree.query_ball_point(coordinates[j], threshold)
+#             queue.extend([k for k in neighbors if k not in visited])
+#         groups.append(group)
 
-    return groups
+#     return groups
 
 def is_diene(smiles, kekulize=True):
     """判断是否为可参与DA反应的二烯，标准为存在双键-单键-双键的结构，且不存在只有一个双键和单键在同一个环上的情况
@@ -704,7 +698,6 @@ def comb_mol(diene, dieno, diene_list, dieno_list, prop="DA", FF_opt = True):
     #     dieno).CalcEnergy()
     # delta_eng = ts_eng - diene_eng - dieno_eng
     return new_mol, 0
-    # return new_comb, ts_eng
 
 
 def react(diene_mol, dieno_mol, distence=1.5, select_diene=0, FFopt=True):
@@ -1061,135 +1054,135 @@ def find_sustation_group(mol, mother_atom:int, ignore_atoms = []):
         all_atoms.update(find_sustation_group(mol, atom, new_ignore_atoms))
     return all_atoms
 
-def read_reactant(csvfile, index_lists=None):
-    """读取指定的.csv,存储了diene/ene的编号（Index），smiles和能量
+# def read_reactant(csvfile, index_lists=None):
+#     """读取指定的.csv,存储了diene/ene的编号（Index），smiles和能量
 
-    Args:
-        csvfile (_type_): _description_
-        index_lists (_type_, optional): _description_. Defaults to None.
+#     Args:
+#         csvfile (_type_): _description_
+#         index_lists (_type_, optional): _description_. Defaults to None.
 
-    Returns:
-        _type_: _description_
-    """    
-    file = pd.read_csv(csvfile, index_col="Index").to_numpy()
-    if index_lists ==None:
-        smiles, energy = file[:, 0], file[:, -1]
-    else:
-        smiles, energy = file[index_lists, 0], file[index_lists, -1]
-    return smiles, energy
+#     Returns:
+#         _type_: _description_
+#     """    
+#     file = pd.read_csv(csvfile, index_col="Index").to_numpy()
+#     if index_lists ==None:
+#         smiles, energy = file[:, 0], file[:, -1]
+#     else:
+#         smiles, energy = file[index_lists, 0], file[index_lists, -1]
+#     return smiles, energy
 
 
 # 处理构象问题的最后手段：彻底的剪切分子
-from functools import reduce
-def is_sp3(atom):
-    """判断一个原子是否为sp3杂化
+# from functools import reduce
+# def is_sp3(atom):
+#     """判断一个原子是否为sp3杂化
 
-    Args:
-        atom (rdkit.Atom): 
+#     Args:
+#         atom (rdkit.Atom): 
 
-    Returns:
-        bool: 
-    """    
-    num_bonds = atom.GetTotalDegree()
-    hybridization = atom.GetHybridization()
-    return num_bonds == 4 and hybridization == Chem.rdchem.HybridizationType.SP3
+#     Returns:
+#         bool: 
+#     """    
+#     num_bonds = atom.GetTotalDegree()
+#     hybridization = atom.GetHybridization()
+#     return num_bonds == 4 and hybridization == Chem.rdchem.HybridizationType.SP3
     
-def find_common(list_of_set):
-    """取多个集合的公共子集。
+# def find_common(list_of_set):
+#     """取多个集合的公共子集。
 
-    Args:
-        list_of_set (_type_): _description_
+#     Args:
+#         list_of_set (_type_): _description_
 
-    Returns:
-        _type_: _description_
-    """    
-    return set(reduce(np.intersect1d, np.array([list(each) for each in list_of_set])))
-def find_all_in(list_of_set):
-    # 取多个集合的并集。
-    return_set = []
-    for each in [list(return_atom_num_set) for return_atom_num_set in list_of_set]:
-        return_set += each
-    return_set = set(return_set)
-    return return_set
+#     Returns:
+#         _type_: _description_
+#     """    
+#     return set(reduce(np.intersect1d, np.array([list(each) for each in list_of_set])))
+# def find_all_in(list_of_set):
+#     # 取多个集合的并集。
+#     return_set = []
+#     for each in [list(return_atom_num_set) for return_atom_num_set in list_of_set]:
+#         return_set += each
+#     return_set = set(return_set)
+#     return return_set
     
 
-def find_neighbor_atom_number(mol, centers, times=3, require_sp3=True,consider_ring=True, exclude_atoms = []):
-    """找到一个分子中，围绕指定的原子序号一定范围的原子编号集合，
+# def find_neighbor_atom_number(mol, centers, times=3, require_sp3=True,consider_ring=True, exclude_atoms = []):
+#     """找到一个分子中，围绕指定的原子序号一定范围的原子编号集合，
 
-    Args:
-        mol (_type_): _description_
-        centers (_type_): _description_
-        times (int, optional): _description_. Defaults to 3.
-        require_sp3 (bool, optional): _description_. Defaults to True.
-        consider_ring (bool, optional): _description_. Defaults to True.
+#     Args:
+#         mol (_type_): _description_
+#         centers (_type_): _description_
+#         times (int, optional): _description_. Defaults to 3.
+#         require_sp3 (bool, optional): _description_. Defaults to True.
+#         consider_ring (bool, optional): _description_. Defaults to True.
 
-    Returns:
-        _type_: _description_
-    """    
-    step = 0
-    if len(centers) == 1:
-        return_atom_num_set = set(centers[0])
-        temp_set = set(centers[0])
-    else:
-        return_atom_num_sets = []
-        temp_sets = [] 
-        for center_id, center in enumerate(centers):
-            return_atom_num_set = set()
-            temp_set = set()
-            for each in center:
-                return_atom_num_set.add(each)
-                temp_set.add(each)
-            return_atom_num_sets.append(return_atom_num_set)
-            temp_sets.append(temp_set)
+#     Returns:
+#         _type_: _description_
+#     """    
+#     step = 0
+#     if len(centers) == 1:
+#         return_atom_num_set = set(centers[0])
+#         temp_set = set(centers[0])
+#     else:
+#         return_atom_num_sets = []
+#         temp_sets = [] 
+#         for center_id, center in enumerate(centers):
+#             return_atom_num_set = set()
+#             temp_set = set()
+#             for each in center:
+#                 return_atom_num_set.add(each)
+#                 temp_set.add(each)
+#             return_atom_num_sets.append(return_atom_num_set)
+#             temp_sets.append(temp_set)
 
-        while (True):
-            step += 1
-            for center_id, center in enumerate(centers):
-                new_num_set = set()
-                for eachatomnum in temp_sets[center_id]:
-                    Atom = mol.GetAtomWithIdx(eachatomnum)
-                    neighbors = set([atom.GetIdx() for atom in Atom.GetNeighbors() if atom.GetIdx() not in return_atom_num_sets[center_id] and atom.GetIdx() not in exclude_atoms])
-                    for eachring in Chem.GetSymmSSSR(mol):
-                        if len(neighbors & set(eachring)) > 0:
-                            neighbors = neighbors | set(eachring)
-                    new_num_set = new_num_set|neighbors
-                    return_atom_num_sets[center_id] = return_atom_num_sets[center_id] | new_num_set
-                temp_sets[center_id] = new_num_set
-            common_atom = find_common(return_atom_num_sets)
-            if len(common_atom):
-                return_atom_num_set = find_all_in(return_atom_num_sets)
-                temp_set = find_all_in(temp_sets)
-                break
+#         while (True):
+#             step += 1
+#             for center_id, center in enumerate(centers):
+#                 new_num_set = set()
+#                 for eachatomnum in temp_sets[center_id]:
+#                     Atom = mol.GetAtomWithIdx(eachatomnum)
+#                     neighbors = set([atom.GetIdx() for atom in Atom.GetNeighbors() if atom.GetIdx() not in return_atom_num_sets[center_id] and atom.GetIdx() not in exclude_atoms])
+#                     for eachring in Chem.GetSymmSSSR(mol):
+#                         if len(neighbors & set(eachring)) > 0:
+#                             neighbors = neighbors | set(eachring)
+#                     new_num_set = new_num_set|neighbors
+#                     return_atom_num_sets[center_id] = return_atom_num_sets[center_id] | new_num_set
+#                 temp_sets[center_id] = new_num_set
+#             common_atom = find_common(return_atom_num_sets)
+#             if len(common_atom):
+#                 return_atom_num_set = find_all_in(return_atom_num_sets)
+#                 temp_set = find_all_in(temp_sets)
+#                 break
 
-    while (True):
-        if step >= times:
-            if sum([is_sp3(mol.GetAtomWithIdx(atomid)) for atomid in temp_set]) == len(temp_set) or not require_sp3:
-                break
-        step += 1
-        new_num_set = set()
-        for eachatomnum in temp_set:
-            Atom = mol.GetAtomWithIdx(eachatomnum)
-            neighbors = set([atom.GetIdx() for atom in Atom.GetNeighbors() if atom.GetIdx() not in return_atom_num_set and atom.GetIdx() not in exclude_atoms])
-            if consider_ring and require_sp3:
-                for eachring in Chem.GetSymmSSSR(mol):
-                    if len(neighbors & set(eachring)) > 0:
-                        neighbors = neighbors | set(eachring)
-            new_num_set = new_num_set|neighbors
-        return_atom_num_set= return_atom_num_set | new_num_set
-        temp_set = new_num_set
+#     while (True):
+#         if step >= times:
+#             if sum([is_sp3(mol.GetAtomWithIdx(atomid)) for atomid in temp_set]) == len(temp_set) or not require_sp3:
+#                 break
+#         step += 1
+#         new_num_set = set()
+#         for eachatomnum in temp_set:
+#             Atom = mol.GetAtomWithIdx(eachatomnum)
+#             neighbors = set([atom.GetIdx() for atom in Atom.GetNeighbors() if atom.GetIdx() not in return_atom_num_set and atom.GetIdx() not in exclude_atoms])
+#             if consider_ring and require_sp3:
+#                 for eachring in Chem.GetSymmSSSR(mol):
+#                     if len(neighbors & set(eachring)) > 0:
+#                         neighbors = neighbors | set(eachring)
+#             new_num_set = new_num_set|neighbors
+#         return_atom_num_set= return_atom_num_set | new_num_set
+#         temp_set = new_num_set
     
-    if consider_ring and not require_sp3:
-        for eachatomnum in centers[0]:
-            for eachring in Chem.GetSymmSSSR(mol):
-                if eachatomnum in eachring:
-                    return_atom_num_set = return_atom_num_set | set(eachring)
+#     if consider_ring and not require_sp3:
+#         for eachatomnum in centers[0]:
+#             for eachring in Chem.GetSymmSSSR(mol):
+#                 if eachatomnum in eachring:
+#                     return_atom_num_set = return_atom_num_set | set(eachring)
 
                     
 
-    #     for eachring in Chem.GetSymmSSSR(mol):
-    #         if len(return_atom_num_set & set(eachring)) > 0:
-    #             return_atom_num_set = return_atom_num_set | set(eachring)
-    return return_atom_num_set
+#     #     for eachring in Chem.GetSymmSSSR(mol):
+#     #         if len(return_atom_num_set & set(eachring)) > 0:
+#     #             return_atom_num_set = return_atom_num_set | set(eachring)
+#     return return_atom_num_set
 
 def is_tran_cycloene(smiles, assert_bond_type=True, return_ring=False):
     mol = Chem.MolFromSmiles(smiles)
