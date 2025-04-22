@@ -62,6 +62,54 @@ def group_atoms(coordinates, threshold):
 
     return groups
 
+def is_diene(smiles, kekulize=True):
+    """判断是否为可参与DA反应的二烯，标准为存在双键-单键-双键的结构，且不存在只有一个双键和单键在同一个环上的情况
+    
+    Determine whether a diene can participate in a Diels-Alder reaction. The criteria are that there must be a double bond - single bond - double bond structure, and there should not be a case where only one double bond and a single bond are in the same ring.
+
+    Args:
+        smiles (str): SMILES
+
+    Returns:
+        Bool: whether can be a 4π
+    """    
+    if type(smiles) == str:
+        mol = Chem.MolFromSmiles(smiles)
+    else:
+        mol = smiles
+    if kekulize:
+        Chem.Kekulize(mol)
+    for bond in mol.GetBonds():
+        if bond.GetBondType() == Chem.BondType.SINGLE:
+            center_id = bond.GetIdx()
+            atom1, atom2 = bond.GetBeginAtom(), bond.GetEndAtom()
+            pre_atom_idx = [atom1.GetIdx(), atom2.GetIdx()]
+            bonds1 = [bond for bond in atom1.GetBonds() if bond.GetBondType() == Chem.BondType.DOUBLE]
+            bonds2 = [bond for bond in atom2.GetBonds() if bond.GetBondType() == Chem.BondType.DOUBLE]
+            if len(bonds1) == 1 and len(bonds2) == 1:
+                bond1, bond2 = bonds1[-1], bonds2[-1]
+                atoms1 = [bond1.GetBeginAtomIdx(), bond1.GetEndAtomIdx()]
+                atoms2 = [bond2.GetBeginAtomIdx(), bond2.GetEndAtomIdx()]
+                atom0 = [atom_id for atom_id in atoms1 if atom_id not in pre_atom_idx][0]
+                atom3 = [atom_id for atom_id in atoms2 if atom_id not in pre_atom_idx][0]
+                diene_list = [atom0, atom1.GetIdx(), atom2.GetIdx(), atom3]
+                try:
+                # check enes are not in different ring
+                    [a1, a2, b1, b2] = diene_list
+                    judge = True
+                    for eachring in Chem.GetSymmSSSR(mol):
+                        if a1 in eachring and a2 in eachring and b1 in eachring:
+                            if b2 not in eachring:
+                                judge = False
+                        if a2 in eachring and b2 in eachring and b1 in eachring:
+                            if a1 not in eachring:
+                                judge = False
+                    if judge == True:
+                        return True
+                    return False
+                except:
+                    return False
+    return False
     
 def find_all_diene(mol):
     """找到mol中所有具有212结构的原子list
