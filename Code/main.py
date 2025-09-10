@@ -209,15 +209,15 @@ def smiles_result_analysis(target_dir):
         smiles_dict["G(Solvent)/Hatree"][idx] = min_engs
         smiles_dict["Stable_conf_id"][idx] = min_conf_idx
 
-        mol = Chem.MolFromMolFile(mol_file[0], removeHs=False)
-        new_mol_name = "smilesid_%.5d_%.4d" % (smiles_id, min_conf_idx)
-        mol_log_files = glob.glob(opt_file_dir + "/" + new_mol_name + "*.log")
-        assert len(mol_log_files) == 1
-        mol_log = logfile_process.Logfile(mol_log_files[0])
-        atom_list = mol_log.symbol_list
-        position = mol_log.first_atom_position
-        mol = xtb_process.xtb_to_mol(mol, [atom_list], [position], 1)
-        Chem.MolToMolFile(mol, mol_file[0])
+        # mol = Chem.MolFromMolFile(mol_file[0], removeHs=False)
+        # new_mol_name = "smilesid_%.5d_%.4d" % (smiles_id, min_conf_idx)
+        # mol_log_files = glob.glob(opt_file_dir + "/" + new_mol_name + "*.log")
+        # assert len(mol_log_files) == 1
+        # mol_log = logfile_process.Logfile(mol_log_files[0])
+        # atom_list = mol_log.symbol_list
+        # position = mol_log.first_atom_position
+        # mol = xtb_process.xtb_to_mol(mol, [atom_list], [position], 1)
+        # Chem.MolToMolFile(mol, mol_file[0])
 
     smiles_dict = pd.DataFrame(smiles_dict)
     smiles_dict.to_csv(target_dir + "/" + "all_smiles.csv", index=False)
@@ -652,7 +652,7 @@ def collect_reaction_file(reaction_file_dir, target_dir, smiles_dir, smiles_csv_
         #     range_time = 1
         # for each in range(range_time):
         # try:
-        molgroup = cycle_process.react(dieno_mol = ene_mol, diene_mol = diene_mol,select_diene=0, distence=3)
+        molgroup = cycle_process.react(dieno_mol = ene_mol, diene_mol = diene_mol,select_diene=150, distence=3)
         # except:
         #     molgroup = []
         for structure_id, [eng, mol, title] in enumerate(molgroup):
@@ -1198,6 +1198,29 @@ def reaction_ts_result_analysis(target_dir, smiles_csv_dir=DIENE_ENE_DIR + "/all
     reaction_dict = pd.DataFrame(reaction_dict)
     # return reaction_dict
     reaction_dict.to_csv(target_dir + "/" + "Result_.csv", index=False)
+
+def reaction_analysis(target_dir, opt_name='ts', eng_name='ts_eng', result_csv = 'test.csv'):
+    opt_dir = target_dir + "/" + opt_name
+    eng_dir = target_dir + "/" + eng_name
+    reaction_dict = {"Name":{}, "E(Hatree)":{}, "G(Hatree)":{}}
+
+    opt_logs = glob.glob(opt_dir + "/*.log")
+    for idx, log_file in tqdm(enumerate(opt_logs)):
+        all_engs, all_conf_id, all_E_engs = read_engs([log_file], eng_dir, returnE=1)
+        if len(all_engs) == 0:
+            reaction_dict["E(Hatree)"][idx] = "TS ENG Fail"
+            reaction_dict["E(Hatree)"][idx] = "TS ENG Fail"
+            continue  
+        min_conf_idx = np.argmin(all_engs)
+        min_engs = all_engs[min_conf_idx]
+        min_E_engs = all_E_engs[min_conf_idx]
+        min_conf_idx = all_conf_id[min_conf_idx]
+        reaction_dict["Name"][idx] = log_file.split("/")[-1]
+        reaction_dict["E(Hatree)"][idx] = min_E_engs
+        reaction_dict["G(Hatree)"][idx] = min_engs
+    reaction_dict = pd.DataFrame(reaction_dict)
+    reaction_dict.to_csv(target_dir + "/" + result_csv, index=False)
+
 
 def reaction_sum_data(target_csv_dir, pred_dict = None,smiles_csv_dir=DIENE_ENE_DIR + "/all_smiles.csv"):
     if pred_dict == None:

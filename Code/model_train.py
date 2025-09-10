@@ -10,7 +10,7 @@ from scipy.interpolate import make_interp_spline
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.model_selection import BaseCrossValidator
 
-import seaborn as sns
+
 from sklearn.model_selection import cross_val_score
 from hyperopt import fmin, Trials, STATUS_OK, tpe
 from tqdm import tqdm
@@ -780,9 +780,11 @@ def Calc_areas(mol, atoms_ids, ):
 
     # 生成均匀的网格点
     x = np.linspace(0.1 -radius, radius - 0.1, num)
-    y = x; z = np.linspace(0.1 -2, 2 - 0.1, num)
+    y = x
+    # z = np.linspace(0.1 -2, 2 - 0.1, num)
+    z = x
     # 调节格点均匀度
-    z = (-0.5 * (np.abs(z) - 2) ** 2  + 2 ) * z / np.abs(z)
+    # z = (-0.5 * (np.abs(z) - 2) ** 2  + 2 ) * z / np.abs(z)
     # 生成点
     points = np.array(np.meshgrid(x, y, z)).T.reshape(-1, 3)
     points_inside = np.zeros(total_points, dtype=bool)

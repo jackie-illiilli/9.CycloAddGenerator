@@ -2,17 +2,18 @@ from Code import model_train, logfile_process, xtb_process, cycle_process
 from rdkit import Chem
 import numpy as np
 
-mol = Chem.MolFromMolFile('Figure/SVO/smilesid_05944.mol', removeHs=False)
-log_file = "Figure/SVO/smilesid_05944_0000.log"
+mol = Chem.MolFromMolFile('Figure/SVO/smilesid_11935.mol', removeHs=False)
+log_file = "Figure/SVO/smilesid_11935_0000.log"
 log = logfile_process.Logfile(log_file)
 symbol_list, position = log.symbol_list, log.running_positions[-1]
 mol = xtb_process.xtb_to_mol(mol, [symbol_list], [position], 1)
 
 for new_mol, atom_lists in cycle_process.change_position(mol, prop='diene', return_tran_cis=False):
     # if atom_lists[0] == 6 and atom_lists[-1] == 7:
-    if atom_lists[0] == 0 and atom_lists[-1] == 3:
+    if atom_lists[0] == 1 and atom_lists[-1] == 3:
         print(model_train.Calc_areas(new_mol, atom_lists))
-        break   
+        break 
+print(model_train.Calc_areas(new_mol, atom_lists))  
 atoms_ids = atom_lists
 mol = new_mol
 table = Chem.rdchem.GetPeriodicTable()

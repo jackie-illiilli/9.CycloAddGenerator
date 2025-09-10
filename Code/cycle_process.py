@@ -213,14 +213,10 @@ def diene_atom_Idx(mol, select_diene=0):
                 select_score[i][0] += 50
             for ring in Chem.GetSymmSSSR(mol):
                 if len([1 for each in diene_index if each in list(ring)]) == 4:
-                    if mol.GetAtomWithIdx(a2).GetSymbol() == "N" and mol.GetAtomWithIdx(b1).GetSymbol() == "N":
-                        select_score[i][0] += 100
-                    else:
-                        rest_atom = [each for each in list(
-                            ring) if each not in diene_index]
-                        if len(rest_atom) == 2:
-                            if mol.GetAtomWithIdx(rest_atom[0]).GetSymbol() == "N" and mol.GetAtomWithIdx(rest_atom[-1]).GetSymbol() == "N":
-                                select_score[i][0] += 100
+                    if mol.GetAtomWithIdx(a2).GetSymbol() == "N":
+                        select_score[i][0] += 50
+                    if mol.GetAtomWithIdx(b1).GetSymbol() == "N":
+                        select_score[i][0] += 50
 
         if int(select_diene) > 10:
             return_list = [each for i,
@@ -974,7 +970,10 @@ def om_to_ts(log_file:logfile_process.Logfile, write_gjf=True, new_dir="ts",
     title = log_file.title
     charge = log_file.charge
     symbol_list = log_file.symbol_list
-    position = log_file.running_positions[-1]
+    try:
+        position = log_file.running_positions[-1]
+    except:
+        position = log_file.first_atom_position
     title = " ".join(str(each) for each in title)
     if write_gjf:
         format_change.block_to_gjf(symbol_list, position, newfile, charge, title,
