@@ -10,7 +10,7 @@ from scipy.interpolate import make_interp_spline
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.model_selection import BaseCrossValidator
 
-
+import seaborn as sns
 from sklearn.model_selection import cross_val_score
 from hyperopt import fmin, Trials, STATUS_OK, tpe
 from tqdm import tqdm
@@ -30,6 +30,7 @@ New_des = ['diene_area_0', 'diene_area_1', 'diene_area_2', 'diene_area_3', 'dien
 
 # def calc_rdkit_mf(smiles):
 #     return Tool.clean_nan(Chem.RDKFingerprint(Chem.MolFromSmiles(smiles)))
+plt.rcParams['font.sans-serif']='Arial'
 
 def descriptor_generator(dfs, des_map=None, mf_des=True, with_product=False, y_name=None, is_3d_map=False):
     input_array = []
@@ -71,8 +72,6 @@ def read_df(df, QM_MAP):
         target_map = pickle.load(f)
     for each in tqdm(range(len(df))):
         temp_list = []
-        diene_smiles = df.iloc[each]["Diene"]
-        ene_smiles = df.iloc[each]["Ene"]
         diene_id = df.iloc[each]["Diene_Index"]
         ene_id = df.iloc[each]["Ene_Index"]
         title = df.iloc[each]["Title"]
@@ -94,24 +93,25 @@ def read_df(df, QM_MAP):
 
 def normalize_axis(arr, axis=0, mean=[], std=[]):
     """
-    对数组中的某一维进行标准化（z-score normalization）
+    Apply z-score normalization along one array axis.
     
-    参数：
-    arr: ndarray，输入的数组
-    axis: int，标准化的维度
+    Args:
+    arr (ndarray): Input array.
+    axis (int): Axis along which to normalize.
     
-    返回值：
-    normalized_arr: ndarray，标准化后的数组
+    Returns:
+    normalized_arr (ndarray): Normalized array.
     """
     if len(mean) == 0 or len(mean) == 0:
-        mean = np.mean(arr, axis=axis, keepdims=True)  # 计算均值
-        std = np.std(arr, axis=axis, keepdims=True)  # 计算标准差
-    normalized_arr = (arr - mean) / std  # 标准化
+        mean = np.mean(arr, axis=axis, keepdims=True)  # Calculate the mean.
+        std = np.std(arr, axis=axis, keepdims=True)  # Calculate the standard deviation.
+    normalized_arr = (arr - mean) / std  # Normalize the values.
     normalized_arr = np.nan_to_num(normalized_arr, 0)
     return normalized_arr, mean, std
 
 def calc_distribution_line(ys, eachsize=0.1, title=None, xlab=None, ylab="Freq", return_result = False, labels = None, colors = None, useSVG=False, save_name='test', figure_size=(5,4), xlimit = []):
-    fig = plt.figure(figsize=figure_size)
+    fig = plt.figure(figsize=figure_size, dpi=300)
+    plt.rcParams['font.sans-serif']='Arial'#Set the font after sns.set.
     y_max = np.max([max(each) for each in ys])
     y_min = np.min([min(each) for each in ys])
     # y_max = 50
@@ -147,8 +147,8 @@ def calc_distribution_line(ys, eachsize=0.1, title=None, xlab=None, ylab="Freq",
     plt.ylim(0, 1.1 * max(all_max))
     plt.xlabel(xlab, fontsize=30)
     plt.ylabel(ylab, fontsize=30)
-    plt.xticks(fontsize=30)
-    plt.yticks(fontsize=30)
+    plt.xticks(fontsize=24)
+    plt.yticks(fontsize=24)
     if labels[0] != None:
         plt.legend()
     if title != None:
@@ -353,16 +353,16 @@ def draw_heatmap(x_labels=[], y_labels=[], values=None, title=None, figure_size=
     # model_labels = ["GB", "XGB", "RF", "ET", "AdaB", "Line", "MLP"]
     # model_labels = ["no_product", "with_product", "with_structure"]
 
-    plt.rcParams['font.sans-serif']='Arial'#设置中文显示，必须放在sns.set之后
+    plt.rcParams['font.sans-serif']='Arial'#Set the font after sns.set.
 
-    uniform_data = values #设置二维矩阵
+    uniform_data = values #Set the 2D data matrix.
     f, ax = plt.subplots(figsize=figure_size, dpi=300)
     annot_kws = {"fontsize": 30}
-    #heatmap后第一个参数是显示值,vmin和vmax可设置右侧刻度条的范围,
-    #参数annot=True表示在对应模块中注释值
-    # 参数linewidths是控制网格间间隔
-    #参数cbar是否显示右侧颜色条，默认显示，设置为None时不显示
-    #参数cmap可调控热图颜色，具体颜色种类参考：https://blog.csdn.net/ztf312/article/details/102474190
+    #The first heatmap argument contains the values; vmin and vmax set the color scale.
+    #Set annot=True to label each cell.
+    # linewidths controls the spacing between cells.
+    #cbar controls whether the color bar is shown.
+    #cmap selects the heatmap color map.
     min_value = np.min(values)
     max_value = np.max(values)
     # min_value = 1
@@ -370,9 +370,9 @@ def draw_heatmap(x_labels=[], y_labels=[], values=None, title=None, figure_size=
     sns.heatmap(uniform_data, ax=ax,vmin=min_value,vmax=max_value,cmap=colors,linewidths=2,cbar=1, annot=True,annot_kws=annot_kws, fmt='.3f')
     cbar = ax.collections[0].colorbar
     cbar.ax.tick_params(labelsize=30)
-    if title!= None: ax.set_title(title, fontsize=40) #plt.title('热图'),均可设置图片标题
-    # ax.set_ylabel('descriptor', fontsize=10)  #设置纵轴标签
-    # ax.set_xlabel('model', fontsize=10)  #设置横轴标签
+    if title!= None: ax.set_title(title, fontsize=40)  # Set the plot title.
+    # ax.set_ylabel('descriptor', fontsize=10)  #Set the y-axis label.
+    # ax.set_xlabel('model', fontsize=10)  #Set the x-axis label.
     if x_labels!= None: 
         ax.set_xticklabels(x_labels, fontsize=30)
         label_x =  ax.get_xticklabels()
@@ -381,74 +381,81 @@ def draw_heatmap(x_labels=[], y_labels=[], values=None, title=None, figure_size=
         ax.set_yticklabels(y_labels, fontsize=30)
         label_y =  ax.get_yticklabels()
         plt.setp(label_y, rotation=0, horizontalalignment='right')
-    # #设置坐标字体方向，通过rotation参数可以调节旋转角度
+    # #Use the rotation parameter to rotate tick labels.
 
     plt.savefig('test.png', dpi=300, bbox_inches = 'tight' )
     plt.show()
     return plt
 
-def plot_scatter_with_metrics(x, y, title=None, min_=None, max_=None, alpha=1, savename='result'):
+def plot_scatter_with_metrics(x, y, title=None, min_=None, max_=None, alpha=1, savename='result', prediction=True, cmap='Reds', scatter=False, xticks=[], yticks=[]):
     """
-    绘制散点图并显示回归性能指标
+    Plot a scatter or density plot and calculate regression metrics.
     
-    参数：
-    x: 一维数组类型，表示x轴数据。
-    y: 一维数组类型，表示y轴数据。
-    title: 字符串类型，表示图的标题。
+    Args:
+    x (array-like): Values for the x-axis.
+    y (array-like): Values for the y-axis.
+    title (str): Plot title.
     
-    返回值：
+    Returns:
     None
     
     """
-    # 计算回归性能指标
+    # Calculate regression metrics.
     r2 = r2_score(x, y)
     mae = mean_absolute_error(x, y)
     mse = mean_squared_error(x, y)
 
-    # 绘制散点图
-    plt.figure(figsize=(5, 5), dpi=300)
-    if not min_ or not max_:
-        min_ = np.min([x,y]) - 5
-        max_ = np.max([x,y]) + 5
-    plt.xlim(min_, max_)
-    plt.ylim(min_, max_)
+    # Draw the scatter plot.
+    plt.figure(figsize=(4.5, 4.5), dpi=300)
+    if prediction:
+        if min_ == None or max_ == None:
+            min_ = np.min([x,y]) - 5
+            max_ = np.max([x,y]) + 5
+        plt.xlim(min_, max_)
+        plt.ylim(min_, max_)
+        z = np.linspace(min_, max_, 10)
+        plt.plot(z, z, alpha=0.2)
     plt.xticks(fontsize=24)
     plt.yticks(fontsize=24)
     if title != None:
         plt.title("%s\nR2:%.3f, MAE:%.3f, MSE:%.3f" % (title, r2, mae, mse), fontsize=24)
         plt.title("%s"%title,fontsize=24)
-    z = np.linspace(min_, max_, 10)
-    plt.plot(z, z, alpha=0.2)
 
-    # plt.scatter(x, y, marker=".", c="g", alpha=alpha)
-    sns.kdeplot(x=x, y=y, cmap="Reds", shade=True, bw_adjust=1, thresh=0.01)
+    if scatter:
+        plt.scatter(x, y, marker=".", c='#4e75a3', alpha=alpha, s=3, )
+    else:
+        sns.kdeplot(x=x, y=y, cmap=cmap, shade=True, bw_adjust=1, thresh=0.01)
+    if len(xticks):
+        plt.xticks(xticks, fontsize=24)
+    if len(yticks):
+        plt.yticks(yticks, fontsize=24)
     plt.xlabel('', fontsize=18)
     plt.ylabel('', fontsize=18)
-    # 添加回归性能指标到图像的第二行
+    # Add regression metrics below the plot.
     
-    # 显示图像
+    # Display the plot.
     plt.savefig(f"{savename}.png", dpi=300, bbox_inches='tight')
     plt.show()
 
 def plot_plot_with_metrics(x, y, title=None, min_=None, max_=None):
     """
-    绘制折线图并显示回归性能指标
+    Plot a line and calculate regression metrics.
     
-    参数：
-    x: 一维数组类型，表示x轴数据。
-    y: 一维数组类型，表示y轴数据。
-    title: 字符串类型，表示图的标题。
+    Args:
+    x (array-like): Values for the x-axis.
+    y (array-like): Values for the y-axis.
+    title (str): Plot title.
     
-    返回值：
+    Returns:
     None
     
     """
-    # 计算回归性能指标
+    # Calculate regression metrics.
     r2 = r2_score(x, y)
     mae = mean_absolute_error(x, y)
     mse = mean_squared_error(x, y)
 
-    # 绘制散点图
+    # Draw the scatter plot.
     plt.figure(figsize=(7, 5))
     if min_ and max_:
         plt.xlim(min_, max_)
@@ -461,37 +468,37 @@ def plot_plot_with_metrics(x, y, title=None, min_=None, max_=None):
         plt.title("%s\nR2:%.3f, MAE:%.3f, MSE:%.3f" % (title, r2, mae, mse), fontsize=24)
         plt.title("%s"%title,fontsize=24)
     plt.plot(x, y, marker="*", c="g")
-    # 添加回归性能指标到图像的第二行
+    # Add regression metrics below the plot.
     
-    # 显示图像
+    # Display the plot.
     plt.savefig("test.png", dpi=300, bbox_inches='tight')
     plt.show() 
 
 def index_of_highly_correlated_features(X, threshold=0.95):
     """
-    删除具有高相关性的特征
+    Identify features with high pairwise correlation.
     
-    参数：
-    X: 二维数组类型，表示特征矩阵。
-    threshold: float类型，表示要删除的最大相关系数，默认为0.95。
+    Args:
+    X (array-like): Feature matrix.
+    threshold (float): Correlation cutoff; defaults to 0.95.
     
-    返回值：
-    X_new: 删除高相关性特征后的新特征矩阵。
+    Returns:
+    Returns a list of feature indices to drop.
     
     """
-    # 计算特征之间的相关系数矩阵
+    # Calculate the feature correlation matrix.
     corr_matrix = pd.DataFrame(X).corr().abs()
     
-    # 获取相关系数矩阵中上三角部分的索引
+    # Select the upper triangle of the correlation matrix.
     upper_tri = corr_matrix.where(~pd.np.tril(pd.np.ones(corr_matrix.shape)).astype(bool))
     
-    # 获取具有高相关性的特征的索引
+    # Collect indices of highly correlated features.
     to_drop = [column for column in upper_tri.columns if any(upper_tri[column] > threshold)]
     
     return to_drop
 
 def calculate_DA_bond_length_difference(data_name, log_file_dir = r"G:\work\Secondary_Selection\ZINC_0"):
-    """计算一个DA反应中过渡态两根键的差异
+    """Calculate the difference between the two forming-bond lengths in a Diels–Alder transition state.
 
     Args:
         data_name (str): file_path
@@ -762,33 +769,31 @@ def Calc_bv(mol, title):
     return result
 
 table = Chem.rdchem.GetPeriodicTable()
-VAN_DER_WAALS_RADII = {each:table.GetRvdw(each) for each in ["H", "B", "C", "N", "O", "F", "S", "Cl", 'Br']}
+VAN_DER_WAALS_RADII = {each:table.GetRvdw(each) for each in ["H", "B", "C", "N", "O", "F", "S", "Cl", 'Br', 'I', 'P', 'Si', 'Se', 'Te', 'As', 'Sb', 'Bi', 'Sn', 'Hg', 'Pb']}
 # {'H': 1.2,'B': 1.8,'C': 1.7,'N': 1.6,'O': 1.55,'F': 1.5,'S': 1.8,'Cl': 1.8,'Br': 1.9}
-def Calc_areas(mol, atoms_ids, ):
-    # 非均匀格点积分
+def Calc_areas(mol, atoms_ids, radius=3, num=20):
+    # Grid-based integration.
     mol_conformers = mol.GetConformers()
     assert len(mol_conformers) == 1
     symbol_lists = [atom.GetSymbol() for atom in mol.GetAtoms()]
     geom = mol_conformers[0].GetPositions()
 
-    # 正方体边长和总点数
-    num = 20
-    radius = 3
+    # Cube dimensions and total number of grid points.
     cube_length = 2 * radius
     total_points = num * num * num 
     counts = np.zeros(8, dtype=np.int32)
 
-    # 生成均匀的网格点
+    # Generate a uniform grid.
     x = np.linspace(0.1 -radius, radius - 0.1, num)
     y = x
     # z = np.linspace(0.1 -2, 2 - 0.1, num)
     z = x
-    # 调节格点均匀度
+    # Adjust grid spacing.
     # z = (-0.5 * (np.abs(z) - 2) ** 2  + 2 ) * z / np.abs(z)
-    # 生成点
+    # Generate grid points.
     points = np.array(np.meshgrid(x, y, z)).T.reshape(-1, 3)
     points_inside = np.zeros(total_points, dtype=bool)
-    # 计算每个点到每个原子中心的距离
+    # Calculate distances from grid points to atom centers.
     for atom_id, (symbol, sphere_center) in enumerate(zip(symbol_lists, geom)):
         if atom_id in [atoms_ids[0], atoms_ids[-1]]:
             continue

@@ -1,4 +1,4 @@
-# 一些常用工具的集合文档
+# Common utility functions.
 from inspect import BoundArguments
 import math, os, shutil
 import numpy as np
@@ -86,7 +86,7 @@ def get_bond_angle_deg(atom_positionA, atom_positionB, atom_positionC):
     return bond_angle
 
 def get_torsion(A, B, C, D):
-    """计算A-B-C-D二面角的cos值
+    """Calculate the cosine of the A-B-C-D torsion angle.
 
     Args:
         A (array): points

@@ -39,7 +39,7 @@ class Logfile():
 
             self.symbol_list, self.first_atom_position = self.read_first_position()
             if self.symbol_list == None:
-                print("It's a wrong file with unknown wrong")
+                print("Unrecognized or invalid file.")
                 return None
             
             if self.file_type != "SPE":
@@ -76,7 +76,7 @@ class Logfile():
 
             if self.file_type == "TS":
                 if self.unreal_freq != 1:
-                    print("%s is not a right TS for unreal freq num of %d" % (self.file_dir, self.unreal_freq) )
+                    print("%s is not a valid transition state (unexpected imaginary-frequency count: %d)." % (self.file_dir, self.unreal_freq) )
                     self.is_right_ts = False
                 else:
                     self.is_right_ts = self.check_om(False)
@@ -119,7 +119,7 @@ class Logfile():
         """    
         lastline = self.filelines[-1]
         if lastline.find(" Normal termination of Gaussian") == -1:
-            print("%s didn't run successful" % self.file_dir)
+            print("%s did not complete successfully." % self.file_dir)
             return False
         else: return True
 
@@ -156,7 +156,7 @@ class Logfile():
             start_index = start_id + 2
             end_index = Tool.find_first_line(self.filelines[start_index:], ' \n', 'all')[0] + start_index
             if end_index is None:
-                print("%s didn't have structure" % self.file_dir)
+                print("%s contains no structure." % self.file_dir)
                 return None, None
             # start_index = [i for i, line in enumerate(self.filelines) if line.find("Symbolic Z-matrix:") >= 0][0] + 2
             # end_index = [i + start_index for i, line in enumerate(self.filelines[start_index:]) if line == ' \n'][0]
@@ -173,7 +173,7 @@ class Logfile():
                 symbol, positions = self.read_running_position(read_first=1)
                 return symbol, positions
             except:
-                print("%s didn't have structure" % self.file_dir)
+                print("%s contains no structure." % self.file_dir)
                 return None, None
             
 
@@ -185,7 +185,7 @@ class Logfile():
             orientation_sign = "Standard orientation:"
         start_indexs = [i for i, line in enumerate(self.filelines) if line.find(orientation_sign) >= 0]
         if len(start_indexs) == 0:
-            print("%s Even not Input Structure, wrong file maybe" % self.file_dir)
+            print("%s has no input structure; the file may be invalid." % self.file_dir)
             return None
         all_positions = []
         for each_start_index in start_indexs:
@@ -217,13 +217,13 @@ class Logfile():
         return method
 
     def read_unreal_freq(self, freq_warning=True):
-        """Detect unreal frequence in last positions
+        """Detect imaginary frequencies in the final geometry.
 
         Args:
             file_dir (_type_): _description_
 
         Returns:
-            int: num of unreal freqences
+            int: Number of imaginary frequencies.
         """    
         start_index = [i for i, line in enumerate(self.filelines) if '(negative Signs)' in line]
         if len(start_index) != 0: start_index = start_index[-1]
@@ -231,7 +231,7 @@ class Logfile():
         smallest_freq_index, smallest_freq_line = Tool.find_first_line(self.filelines[start_index:], ' Frequencies --', "start")
         smallest_freq_index += start_index
         if smallest_freq_index == None:
-            print("%s didn't calc freq" % self.file_dir)
+            print("%s has no frequency calculation." % self.file_dir)
             return -1, []
         smallest_freq_list = smallest_freq_line.strip("\n").split()[2:]
         num_unreal_freq = sum([1 for each in smallest_freq_list if float(each) < 0])
@@ -246,7 +246,7 @@ class Logfile():
             matrix.append(line)
             start_id += 1
         if freq_warning:
-            print("%s have unreal freq" % self.file_dir)
+            print("%s has unexpected imaginary frequencies." % self.file_dir)
         return num_unreal_freq, matrix, smallest_freq_list[0]
 
     def read_log_eng(self): 
@@ -256,13 +256,13 @@ class Logfile():
             gjffile (str): *.log
 
         Returns:
-            ee, zpc, cor_Energy, cor_Enthalpies, cor_Gibbs : [list with 电子能，零点能，常温热能矫正，焓矫正，自由能矫正]
+            ee, zpc, cor_Energy, cor_Enthalpies, cor_Gibbs : [list with electronic energy, zero-point correction, thermal energy correction, enthalpy correction, and Gibbs free-energy correction]
         """
         all_engs = []
         opt_engs = []
         start_indexs = [i for i, line in enumerate(self.filelines) if line.find("Standard orientation: ") >= 0]
         if len(start_indexs) == 0:
-            print("%s, can't find any engs" % self.file_dir)
+            print("%s: no energies found." % self.file_dir)
             return all_engs, opt_engs
         for start_index in start_indexs:
             ee_line = Tool.find_first_line(self.filelines[start_index:], " SCF Done: ", "start")[-1]
@@ -318,7 +318,7 @@ class Logfile():
         errorline_id = [i for i, line in enumerate(self.filelines) if " Error termination" in line]
         # errorline_id = Tool.find_first_line(self.filelines,"start")[0]
         if len(errorline_id) == 0 and not self.normal_end:
-            print(self.file_dir, "应该是没跑完")
+            print(self.file_dir, "Calculation appears incomplete:")
             error_reason_line = "unfinished"
         else:
             errorline_id = errorline_id[-1]
@@ -327,8 +327,8 @@ class Logfile():
         self.error_reason = error_reason_line
     
     def solve_error_logfile(self, new_log_dir, move_file=True, savechk=None, readchk=None):
-        # 选取能量最低结构，用相同方法继续跑
-        # 适用于link 9999, 
+        # Continue from the lowest-energy structure using the same method.
+        # Applies to Link 9999.
         reason = self.error_reason
         if not os.path.isdir(new_log_dir):
             os.mkdir(new_log_dir)
@@ -394,7 +394,7 @@ class Logfile():
     def l103_adjust(self):
         def get_Rotation_M(axial_v, theta):
             v = np.array(axial_v[:3])
-            # 归一化
+            # Normalize the vector.
             u, v, w = v/np.linalg.norm(v)
             a = theta
             R_M = np.array([[u**2+(1-u**2)*np.cos(a),       u*v*(1-np.cos(a))-w*np.sin(a),  u*w*(1-np.cos(a))+v*np.sin(a),  0],
@@ -445,7 +445,7 @@ class Logfile():
         if self.angle_idx.all():
             new_position = self.l103_adjust()
         else:
-            print('!!! Warning file: %s; Unknown Error：%s'%(self.file_dir, self.error_reason))
+            print('Warning: %s; unclassified error: %s'%(self.file_dir, self.error_reason))
             new_position = self.running_positions[-2]
         return new_position
         
@@ -461,7 +461,7 @@ class Logfile():
             position = mol.GetConformer(0).GetPositions()
             for atom_id, atom in enumerate(mol.GetAtoms()):
                 if atom.GetSymbol() != self.symbol_list[atom_id] and atom.GetAtomicNum() != self.symbol_list[atom_id]:
-                    print("wrong with", atom.GetIdx(), atom.GetAtomicNum(), atom_id, self.symbol_list[atom_id])
+                    print("Unexpected atom:", atom.GetIdx(), atom.GetAtomicNum(), atom_id, self.symbol_list[atom_id])
                     return False
         else:
             position = self.first_atom_position
@@ -481,12 +481,12 @@ class Logfile():
                 if start_atom_id in except_idx and end_atom_id in except_idx:
                     ignore=True
                     if distance_b >= 4.0 or distance_b <= 1.6:
-                        print(os.path.split(self.file_dir)[-1], start_atom_id, end_atom_id, "atom may ircorrect", distance_b)
+                        print(os.path.split(self.file_dir)[-1], start_atom_id, end_atom_id, "atom may be incorrectly placed", distance_b)
                         return False
             if print_num:
                 print("%d %d %.5f" % (start_atom_id, end_atom_id, num))
             if (num <= 0.75 or num >= 1.3) and not ignore:
-                print(os.path.split(self.file_dir)[-1], start_atom_id, end_atom_id, "with a wrong distance", num)
+                print(os.path.split(self.file_dir)[-1], start_atom_id, end_atom_id, "has an unexpected distance", num)
                 return False
         return True
     
@@ -502,12 +502,12 @@ class Logfile():
             end_atom_id = except_idx[1]
             distance = Tool.get_atoms_distance(new_position[start_atom_id], new_position[end_atom_id])
             if distance >= 1.7:
-                print(os.path.split(self.file_dir)[-1], start_atom_id, end_atom_id, "atom may ircorrect", distance)
+                print(os.path.split(self.file_dir)[-1], start_atom_id, end_atom_id, "atom may be incorrectly placed", distance)
                 return False
         return True
 
     def unreal_freq_improve(self, new_log_dir, savechk=None, readchk=None):
-        """解决虚频问题: 将虚频振动的1.1倍带入到下一步优化结构中
+        """Handle an unwanted imaginary frequency by displacing the geometry 1.1 times along its mode before re-optimization.
 
         Args:
             logfile (_type_): _description_
@@ -524,7 +524,7 @@ class Logfile():
         format_change.block_to_gjf(self.symbol_list, new_position, new_gjf_name, self.charge, title, self.method, freeze=self.freeze, difreeze=self.difreeze , savechk=savechk, readchk=readchk)
 
     def react_RMSD(self):
-        """判断优化过程中的RMSD变化
+        """Calculate the RMSD between the initial and final optimized geometries.
 
         Args:
             log_dir (_type_): _description_
@@ -542,7 +542,7 @@ class Logfile():
         return np.sqrt(sum_delta2)
 
     def check_om(self, return_value=False, set_num=0.4):
-        """读取过渡态结构，判断过渡态虚频是否对应反应位点
+        """Read a transition-state structure and check whether its imaginary mode involves the reaction site.
 
         Args:
             file_dir (str): _description_
@@ -566,7 +566,7 @@ class Logfile():
                 return 1
         else:
             pass
-            # print("%s may find wrong TS" % self.file_dir)
+            # print("%s may indicate a problematic transition state" % self.file_dir)
         return 0
     
     def read_orbit_eng(self, HOMO_index = [-2, -1], LUMO_index=[0,1]):
@@ -598,7 +598,7 @@ class Logfile():
         lines = self.filelines
         dipole_line_id = [line_id for line_id, line in enumerate(lines) if line.startswith(" Dipole moment ")]
         if len(dipole_line_id) == 0:
-            print(self.filelines, "did't have a dipole moment")
+            print(self.filelines, "No dipole moment found.")
             return -1
 
         dipole_line = lines[dipole_line_id[-1] + 1]

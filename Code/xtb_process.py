@@ -72,7 +72,7 @@ def format_constrained_atoms(rest_atoms):
 
 def xtb_write_xyz(mol, atom_list=None, position_list=None, xtb_dir='xtb_process/', smiles_name='test',constrain_atoms=None, dist_rest=None):
     """
-    次级函数：对mol的每一个构象，在id_%.8d_%d的文件夹中生成xtb优化文件
+    Helper: write xTB optimization inputs for each conformer in an id_%.8d_%d directory.
     parents of mol_to_xyz()
 
     Args:
@@ -119,8 +119,8 @@ def xtb_write_xyz(mol, atom_list=None, position_list=None, xtb_dir='xtb_process/
         file_dirs.append(new_path + os.path.split(eachfile)[1])
     return file_dirs
 
-def write_xtb_pbs(pbs_path, charge, que="epsilon", root_dir='charg_0'):
-    """xtb运行的shell脚本生成工具
+def write_xtb_pbs(pbs_path, charge, que="epsilon", root_dir='charg_0', mdlen=0.5):
+    """Generate a shell script for xTB jobs.
 
     Args:
         xyz_name (_type_): _description_
@@ -133,18 +133,18 @@ def write_xtb_pbs(pbs_path, charge, que="epsilon", root_dir='charg_0'):
         f.write("export OMP_NUM_THREADS=28\nexport MKL_NUM_THREADS=28\nexport OMP_STACKSIZE=6000m\n\n")
         f.write("cd $PBS_O_WORKDIR\ntouch jobID.$PBS_JOBID\nrootdir=%s\n" % root_dir)
         f.write("folders=`ls $PBS_O_WORKDIR/$rootdir/`\nfor folder in $folders\ndo\n    cd $PBS_O_WORKDIR/$rootdir/$folder\n")
-        f.write("    crest $folder.xyz -T 28 -gfn2 -chrg %d -uhf 0 -rthr 0.25 -shake 1 --mdlen 0.5 > crest.out\n" % charge)
+        f.write("    crest $folder.xyz -T 28 -gfn2 -chrg %d -uhf 0 -rthr 0.25 -shake 1 --mdlen %.1f > crest.out\n" % (charge, mdlen))
         f.write("done")
 
 def xtb_main(smiles_names, smileses, dir_path='xtb_process', que="epsilon", core=1):
-    """    !! 主流程
-    对于smileses的所有分子，按照电荷进行归类，按照文件夹名称进行处理
+    """    Main workflow.
+    Group molecules by charge and prepare the corresponding job directories.
 
     Args:
         smileses (_type_): smiles or mols
         dir_path (str, optional): root dir saved charge files. Defaults to 'xtb_process'.
-        que (str, optional): 超算队列. Defaults to "epsilon".
-        core(int): 是否要分成多个文件夹计算
+        que (str, optional): Queue name. Defaults to "epsilon".
+        core(int): Whether to split jobs across multiple directories.
     """    
 
     if os.path.isdir(dir_path):
@@ -189,13 +189,13 @@ def xtb_main(smiles_names, smileses, dir_path='xtb_process', que="epsilon", core
                 f.write("qsub %s\n" % "xtb_%d_%d.pbs" % (eachcharge, 0))
 
 def xtb_om(all_result, dir_path='xtb_process', que="epsilon", core=1):
-    """    !! 主流程2
-    对于smileses的所有分子，按照10个一批
+    """    Batch workflow.
+    Process the molecules in batches of ten.
 
     Args:
         all_result (list): [id, title, symbol_list, new_position, charge, constrain_atoms, dist_const]
         dir_path (str, optional): root dir saved charge files. Defaults to 'xtb_process'.
-        que (str, optional): 超算队列. Defaults to "epsilon".
+        que (str, optional): Queue name. Defaults to "epsilon".
     """    
 
     if os.path.isdir(dir_path):
@@ -240,23 +240,22 @@ def check_xtb_normal(root_dir):
         with open(each_file + "/crest.out", "rt") as f:
             lines = f.readlines()
         if not lines[-1].startswith(" CREST terminated normally."):
-            print(each_file.split('/')[-1], "not end normally")
+            print(each_file.split('/')[-1], "did not terminate normally")
             error_code = 1
     if not error_code:
-        print("All End Normally!")
+        print("All jobs completed normally.")
         return 1
     else:
         return 0
 
 def read_xyz(file_dir):
-    """read .zyx files, can read multiple molecules
-    sub of read_xyz
+    """Read an XYZ file containing one or more molecules.
     Args:
-        file_dir (str): file_dir endwith .xyz
+        file_dir (str): Path to an XYZ file.
 
     Returns:
-        atoms: list of atoms
-        position: array of position
+        atoms: List of atomic symbols.
+        positions: Array of Cartesian coordinates.
     """    
     with open(file_dir) as f:
         lines = f.readlines()
@@ -288,7 +287,7 @@ def xtb_is_success(xtb_dir):
             final_line = f.readlines()[-1]
         if final_line.startswith(" CREST terminated normally."):
             return True
-    print(xtb_dir, "  unsuccessful!")
+    print(xtb_dir, "xTB run failed:")
     return False
 
 def after_xtb(mol, 
@@ -300,29 +299,29 @@ def after_xtb(mol,
             xtb_title=None, 
             method="opt freq b3lyp/6-31g* em=gd3bj g09def", 
             freeze=[]):
-    """根据root_dir, charge, mol 更新优化分子
+    """Update an optimized molecule using root_dir, charge, and mol.
 
     Args:
-        mol (_type_): _description_
-        mol_id (str): _description_
-        root_dir (str, optional): _description_. Defaults to "xtb_process".
-        charge(int, optional):charge for xtbdir
+        mol (Chem.Mol): Molecule to update with optimized coordinates.
+        mol_str (str): Molecule identifier used in the job-directory names.
+        root_dir (str, optional): Directory containing xTB job folders. Defaults to "xtb_process".
+        save_dir (str, optional): Directory for collected structures. Defaults to "xtb_result".
     """  
     xtb_dir = glob.glob(root_dir + "/" + "%s_*" % mol_str)
     if len(xtb_dir) == 0:
-        print("mol_str:%sdidn't find crest_best!" % (mol_str))
+        print("CREST best structure not found for molecule %s." % (mol_str))
         return 0
     charge = int(xtb_dir[0].split("\\")[-2].split("_")[-2])
     for conf_id, each_dir in enumerate(xtb_dir):
         if not os.path.isfile(each_dir + "/crest_best.xyz"):
-            print("mol_str:%s, conf_id:%d didn't find crest_best!" % (mol_str, conf_id))
+            print("CREST best structure not found for molecule %s, conformer %d." % (mol_str, conf_id))
             # xtb_files = glob.glob(each_dir + '/id*.xyz')
             # xtb_update_mol(mol, xtb_files[0])
         else:
             try:
                 xtb_update_mol(mol, each_dir + "/crest_conformers.xyz", conf_limit, rmsd_limit)
             except:
-                print("mol_str:%s, conf_id:%d have something wrong!" % (mol_str, conf_id))
+                print("Optimization failed for molecule %s, conformer %d." % (mol_str, conf_id))
     for conf_id in range(len(mol.GetConformers())):
         file_dir = save_dir + "/%s_%.4d.gjf" % (mol_str, conf_id)
         if len(freeze):
@@ -330,7 +329,7 @@ def after_xtb(mol,
         else:
             format_change.mol_to_gjf(mol, file_dir, confid=conf_id, method=method, charge=charge, title=xtb_title)
 
-# 检查错误
+# Check for errors.
 
 
 
@@ -388,13 +387,14 @@ def shift_to_sugan(target_file, quene_id = 1):
             name = os.path.split(pbs_file)[-1]
             f.write("sbatch %s\n" % name)
 
-def shift_to_parra(target_file):
+def shift_to_parra(target_file, uhf=0):
     pbs_files = glob.glob(target_file + '/*.pbs')
     for pbs_file in pbs_files:
         with open(pbs_file, "wt",  newline='\n') as f:
+            charge = int(pbs_file.split(".pbs")[0].split("_")[-2])
             number = int(pbs_file.split(".pbs")[0].split("_")[-1])
-            f.write("#!/bin/bash\n#SBATCH -p amd_512\n#SBATCH -N 1\n#SBATCH -n 1\n#SBATCH -c 28\n\nroot=`pwd`\nrootdir=charg_0_%d\nfolders=`ls $root/$rootdir/`\n" % (number))
-            f.write("for folder in $folders\ndo\n    cd $root/$rootdir/$folder\n    crest $folder.xyz -T 28 -gfn2 -chrg 0 -uhf 0 -rthr 0.25 -shake 1 --mdlen 0.5 > crest.out\ndone\n")
+            f.write(f"#!/bin/bash\n#SBATCH -p amd_m8_768\n#SBATCH -N 1\n#SBATCH -n 1\n#SBATCH -c 4\n\nroot=`pwd`\nrootdir=charg_{charge}_{number}\nfolders=`ls $root/$rootdir/`\n")
+            f.write(f"for folder in $folders\ndo\n    cd $root/$rootdir/$folder\n    crest $folder.xyz -T 4 -gfn2 -chrg {charge} -uhf {uhf} -rthr 0.25 > crest.out\ndone\n")
     with open(target_file + '/suball', "wt",  newline='\n') as f:
         for pbs_file in pbs_files:
             name = os.path.split(pbs_file)[-1]

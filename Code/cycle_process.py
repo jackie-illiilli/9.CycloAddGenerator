@@ -10,7 +10,7 @@ from rdkit.Geometry import Point3D
 
 
 def mol_add_Hs(molfile):
-    """给molfile文件补氢
+    """Add hydrogens to a molfile structure.
 
     Args:
         molfile (_type_): _description_
@@ -23,20 +23,20 @@ def mol_add_Hs(molfile):
 
 # def group_atoms(coordinates, threshold):
 #     """
-#     划分原子成若干组。
+#     Group atoms by spatial proximity.
     
-#     参数：
-#     - coordinates: N x 3 的 NumPy 数组，表示 N 个原子的坐标。
-#     - threshold: 阈值，表示两个原子之间的距离不超过该值时，这两个原子应该被划分到同一组中。
+#     Args:
+#     - coordinates: N × 3 NumPy array of atom coordinates.
+#     - threshold: Distance threshold for grouping atoms.
     
-#     返回值：
-#     - 一个包含若干组的列表，每一组由若干原子的序号构成。
+#     Returns:
+#     - List of atom-index groups.
 #     """
-#     # 构建 KD 树
+#     # Build a KD-tree.
 #     from scipy.spatial import KDTree
 #     tree = KDTree(coordinates)
 
-#     # 查找近邻点
+#     # Find neighboring points.
 #     groups = []
 #     visited = set()
 #     for i in range(len(coordinates)):
@@ -57,9 +57,9 @@ def mol_add_Hs(molfile):
 #     return groups
 
 def is_diene(smiles, kekulize=True):
-    """判断是否为可参与DA反应的二烯，标准为存在双键-单键-双键的结构，且不存在只有一个双键和单键在同一个环上的情况
-    
-    Determine whether a diene can participate in a Diels-Alder reaction. The criteria are that there must be a double bond - single bond - double bond structure, and there should not be a case where only one double bond and a single bond are in the same ring.
+    """Check for a Diels–Alder-eligible double–single–double motif.
+
+    Reject motifs where a ring contains the central bond and only one adjacent double bond.
 
     Args:
         smiles (str): SMILES
@@ -106,8 +106,8 @@ def is_diene(smiles, kekulize=True):
     return False
     
 def find_all_diene(mol):
-    """找到mol中所有具有212结构的原子list
-    过于屎山，不知道咋写的逼玩意
+    """Find atom-index lists matching the 2-1-2 pattern in a molecule.
+    Legacy atom-pattern matcher; retained for compatibility.
 
     Args:
         mol (_type_): _description_
@@ -156,8 +156,8 @@ def find_all_diene(mol):
     return Tool.remove_same(return_list)
 
 def dieno_atom_Idx(mol):
-    """找到mol中所有具有双键或者三键结构的原子list
-    如果存在碳碳双键，则忽略所有杂原子双键和芳香键
+    """Find atom-index lists containing double or triple bonds.
+    If a C=C bond is present, ignore heteroatom double bonds and aromatic bonds.
 
     Args:
         mol (_type_): _description_
@@ -183,11 +183,11 @@ def dieno_atom_Idx(mol):
     return atom_list
 
 def diene_atom_Idx(mol, select_diene=0):
-    """继找到atom list以来，按照经验规则对反应性排序筛选.
+    """Rank candidate reactive sites using empirical rules.
 
     Args:
         mol (_type_): _description_
-        select_diene (int, optional): 0不筛选，100筛两端为碳，200两端为碳，中间为氮的芳香结构. Defaults to 0.
+        select_diene (int, optional): 0: no filtering; 100: carbon termini; 200: aromatic motifs with carbon termini and a central nitrogen. Defaults to 0.
 
     Returns:
         _type_: _description_
@@ -229,7 +229,7 @@ def diene_atom_Idx(mol, select_diene=0):
             return select_score[:int(select_diene)]
 
 def move(a):
-    """将三位矩阵a转化为四维旋转平移矩阵
+    """Convert a 3D translation vector to a 4 × 4 homogeneous transformation matrix.
 
     Args:
         a (iterable): 
@@ -241,10 +241,10 @@ def move(a):
     return np.array([[1, 0, 0, x], [0, 1, 0, y], [0, 0, 1, z], [0, 0, 0, 1]])
 
 def rotation(a, sin, cos):
-    """生成矩阵，与之相乘能沿a轴旋转sin，cos角度
+    """Build a 4 × 4 matrix for rotation about axis a using the specified sine and cosine.
 
     Args:
-        a (array): 3维
+        a (array): 3D vector.
         sin (int): 
         cos (int): 
 
@@ -262,13 +262,13 @@ def rotation(a, sin, cos):
                      [0, 0, 0, 1]])
 
 def trfm_rot(a, b, c, position=[], center_point=np.array([0, 0, 0])):
-    """针对a,b,c三点，平移旋转使ab矢量平行于x轴，a,b,c在xoy平面上，a,b关于center_point对称
+    """Transform coordinates so a–b lies on x, a and b are symmetric about center_point, and c lies in the xy plane.
 
     Args:
-        a (_type_): 3维坐标，最后会位于x轴负方向
-        b (_type_): 3维坐标，最后会位于x轴正方向
-        c (_type_): 3维坐标，调整后其y轴坐标为正，z轴坐标为0
-        position (list, optional): 3维/4维矩阵皆可. Defaults to [].
+        a (_type_): 3D coordinate; transformed to the negative x direction.
+        b (_type_): 3D coordinate; transformed to the positive x direction.
+        c (_type_): 3D coordinate; transformed to positive y with z set to zero.
+        position (list, optional): 3D or 4D coordinate array. Defaults to [].
         center_point (_type_, optional): _description_. Defaults to np.array([0, 0, 0]).
 
     Returns:
@@ -319,7 +319,7 @@ def trfm_rot(a, b, c, position=[], center_point=np.array([0, 0, 0])):
 
 
 def diene_cut_down(mol, center_atoms):
-    """将diene原子，以中间单键分为两部分，方便二烯顺反扭转
+    """Split the diene across its central single bond to allow cis/trans rotation.
     Args:
         mol (mol): _description_
         center_atoms (list): _description_
@@ -369,7 +369,7 @@ def diene_cut_down(mol, center_atoms):
     return left_atoms_set, right_atoms_set
 
 def trans_to_cis(mol, position, center_atoms):
-    """将反式二烯扭转为顺式二烯
+    """Convert a trans diene geometry to cis by rotating one half.
 
     Args:
         mol (_type_): _description_
@@ -381,12 +381,12 @@ def trans_to_cis(mol, position, center_atoms):
     # atomA, atomB, atomC, atomD = center_atoms
     A, B, C, D = [np.array(position[each]) for each in center_atoms]
     cos0 = Tool.get_torsion(A, B, C, D)
-    if cos0 > 0:# 不用扭转
+    if cos0 > 0:  # No rotation is required.
         return position, 0
     else:
         try:
             left_atoms_set, right_atoms_set = diene_cut_down(mol, center_atoms)
-            # 将反式烯烃转为顺式烯烃：将B原子挪到原点，此时转轴BC向量就是0C向量
+            # Move atom B to the origin; vector BC then defines the rotation axis.
             move_array = np.zeros(3) - B
             mol = move_mol(mol, move_array)
             conformer = mol.GetConformers()[0]
@@ -407,7 +407,7 @@ def trans_to_cis(mol, position, center_atoms):
     return position, 1
 
 def change_position(react1, prop="diene", name=None, save=False, addHs=True, select_diene=0, return_tran_cis=False):
-    """将diene或者ene摆好位置，使得烯烃平面与XOY重合，始末原子中点为原点，指向x轴，后面直接拉距离就行
+    """Orient the diene or ene with the alkene plane in xy, the reactive-bond midpoint at the origin, and the reactive axis along x.
 
     Args:
         react1 (_type_): _description_
@@ -471,11 +471,11 @@ def change_position(react1, prop="diene", name=None, save=False, addHs=True, sel
     return return_mols
 
 def rot_mol(mol, axis=np.array([0, 1, 0]), sin=0, cos=-1):
-    """旋转分子的所有构象，默认围绕y轴旋转180°
+    """Rotate every conformer; the default is 180° about the y-axis.
 
     Args:
         mol (_type_): _description_
-        axis (array, optional): 转轴. Defaults to np.array([0, 1, 0]).
+        axis (array, optional): Rotation axis. Defaults to np.array([0, 1, 0]).
         sin (int, optional): _description_. Defaults to 0.
         cos (int, optional): _description_. Defaults to -1.
 
@@ -495,7 +495,7 @@ def rot_mol(mol, axis=np.array([0, 1, 0]), sin=0, cos=-1):
 
 
 def move_mol(mol, array=np.array([0, 0, 1.5])):
-    """移动分子的所有构象，默认向z轴移动1.5个单位（ene）
+    """Translate every conformer; the default ene displacement is 1.5 units along z.
 
     Args:
         mol (_type_): _description_
@@ -609,7 +609,7 @@ def up_down_check(position, diene_num1, diene_num2, dieno_num1, start, diene_mol
 
 
 def comb_mol(diene, dieno, diene_list, dieno_list, prop="DA", FF_opt = True):
-    """按照指定的原子，搭建DA反应后体产物， 立场优化，计算能量
+    """Build a Diels–Alder product from the specified atoms, optionally optimize it with a force field, and calculate its energy.
 
     Args:
         diene (mol): _description_
@@ -697,13 +697,13 @@ def comb_mol(diene, dieno, diene_list, dieno_list, prop="DA", FF_opt = True):
 
 
 def react(diene_mol, dieno_mol, distence=1.5, select_diene=0, FFopt=True):
-    """主函数，给定Diene和ene，搭建所有D-A反应的结果，能量大小排序
+    """Construct and rank Diels–Alder products for a diene–ene pair.
 
     Args:
         diene_mol (mol): 
         dieno_mol (mol): ene
-        distence (float, optional): 拉开距离，默认1.5. Defaults to 1.5.
-        select_diene (int, optional): 对diene的可能进行筛选，默认不筛选. Defaults to 0.
+        distence (float, optional): Initial separation. Defaults to 1.5.
+        select_diene (int, optional): Diene-site selection mode. Defaults to no filtering (0).
 
     Returns:
         _type_: _description_
@@ -767,10 +767,10 @@ def react(diene_mol, dieno_mol, distence=1.5, select_diene=0, FFopt=True):
 
 def eng_to_om(log_file:logfile_process.Logfile, diene_mol, new_dir="om", assert_title=None, write_gjf=True, distance=2.1, 
 method='opt=modredundant freq b3lyp/6-31g(d) em=gd3bj', target_cos = -0.9396926, difreeze=True):
-    """将后体优化log结果读取，拉长反应键，限制性优化
+    """Read an optimized product log, extend the forming bonds, and prepare a constrained optimization.
 
     Args:
-        file_name (str, optional): 设定的. Defaults to "../file/test6/TSa_opt_0.log".
+        log_file (Logfile): Parsed Gaussian log file.
     """    
     new_name = os.path.split(log_file.file_dir)[-1].split(".")[0] + ".gjf"
     newfile = new_dir + "/" + new_name 
@@ -788,20 +788,20 @@ method='opt=modredundant freq b3lyp/6-31g(d) em=gd3bj', target_cos = -0.9396926,
     dieno_point1 = position[dieno_num1 + start]
     dieno_point2 = position[dieno_num2 + start]
 
-    # 平面定位
+    # Align the reactive planes.
     new_position = trfm_rot(diene_point1, diene_point2, (dieno_point1 + dieno_point2)/2, position)
     diene_center_point = (
         new_position[diene_num1] + new_position[diene_num2])/2
     dieno_center_point = (
         new_position[dieno_num1 + start] + new_position[dieno_num2 + start])/2
     y_distance = distance - np.sqrt((diene_center_point - dieno_center_point)
-                                @ (diene_center_point - dieno_center_point).T)# 所需拉伸的距离
+                                @ (diene_center_point - dieno_center_point).T)  # Target separation distance.
     diene_position = new_position[:start]
     dieno_position = new_position[start:]
-    # 拉伸
+    # Extend the forming bonds.
     move_matrix = move(np.array([0, y_distance, 0]))
     dieno_position = (move_matrix @ dieno_position.T).T
-    # 旋转至同一平面
+    # Rotate into a common plane.
     diene_array = diene_position[diene_num1] - diene_position[diene_num2]
     dieno_array = dieno_position[dieno_num1] - dieno_position[dieno_num2]
     law_array = np.cross(diene_array[:3], dieno_array[:3])
@@ -811,7 +811,7 @@ method='opt=modredundant freq b3lyp/6-31g(d) em=gd3bj', target_cos = -0.9396926,
     diene_position = (rot_matrix @ diene_position.T).T
     new_position = np.append(diene_position, dieno_position, axis=0)
     new_position = np.array([each[:3] for each in new_position])
-    # 重新定位
+    # Reposition the coordinates.
     diene_point1 = new_position[diene_num1]
     diene_point2 = new_position[diene_num2]
     dieno_point1 = new_position[dieno_num1 + start]
@@ -830,7 +830,7 @@ method='opt=modredundant freq b3lyp/6-31g(d) em=gd3bj', target_cos = -0.9396926,
     # print(diene_point3)
     new2_position = trfm_rot(diene_point1, diene_point2, diene_point3, new_position)
     # new2_position = np.array([each[:3] for each in new2_position])
-    # 求角度
+    # Calculate the angle.
     diene_point1 = new2_position[diene_num1][:3]
     diene_point2 = new2_position[diene_num2][:3]
     dieno_point1 = new2_position[dieno_num1 + start][:3]
@@ -851,7 +851,7 @@ method='opt=modredundant freq b3lyp/6-31g(d) em=gd3bj', target_cos = -0.9396926,
             dieno_position = (rot_matrix @ dieno_position.T).T
             new2_position = np.append(diene_position, dieno_position, axis=0)
 
-            # 移动取代基
+            # Move the substituent.
             if cos < 0.5:
                 cos = 0.5
                 sin = -np.sqrt(1-cos ** 2)
@@ -902,7 +902,7 @@ def om_to_om2(log_file,
     diene_num1, diene_num2, dieno_num1, dieno_num2, start = [
         int(each) for each in title][:5]
 
-    # 重新定位
+    # Reposition the coordinates.
     position = np.array(position) + 0.0001
     diene_point1 = position[diene_num1]
     diene_point2 = position[diene_num2]
@@ -922,7 +922,7 @@ def om_to_om2(log_file,
     # print(diene_point3)
     new2_position = trfm_rot(diene_point1, diene_point2, diene_point3, position)
     # new2_position = np.array([each[:3] for each in new2_position])
-    # 求角度
+    # Calculate the angle.
     diene_point1 = new2_position[diene_num1][:3]
     diene_point2 = new2_position[diene_num2][:3]
     dieno_point1 = new2_position[dieno_num1 + start][:3]
@@ -1006,7 +1006,7 @@ def ts_to_irc(log_file:logfile_process.Logfile, new_dir, methods=None):
     return title, symbol_list, position, charge
 
 def smiles2mol(smiles, conf_num=20):
-    """smiles 转化为mol，包含AddHs和Embed的3D结构生成
+    """Convert SMILES to a molecule, add hydrogens, and generate 3D conformers.
 
     Args:
         smiles (str): _description_
@@ -1016,7 +1016,7 @@ def smiles2mol(smiles, conf_num=20):
     """    
     mol = Chem.MolFromSmiles(smiles)
     if mol == None:
-        print(smiles, "can't be read")
+        print(smiles, "could not be parsed")
         return None
     Hmol = Chem.AddHs(mol)
     AllChem.EmbedMultipleConfs(Hmol, numConfs=conf_num, maxAttempts=100, )
@@ -1035,7 +1035,7 @@ def add_conformer(mol, conf_num=50):
     return mol
 
 def find_sustation_group(mol, mother_atom:int, ignore_atoms = []):
-    """给定取代基原子mother_atom， 和母体原子ignore_atoms，找到取代基上面的所有原子
+    """Find all atoms in the substituent attached to mother_atom, excluding ignore_atoms.
 
     Args:
         mol (_type_): _description_
@@ -1054,7 +1054,7 @@ def find_sustation_group(mol, mother_atom:int, ignore_atoms = []):
     return all_atoms
 
 # def read_reactant(csvfile, index_lists=None):
-#     """读取指定的.csv,存储了diene/ene的编号（Index），smiles和能量
+#     """Read a CSV containing diene/ene indices, SMILES, and energies.
 
 #     Args:
 #         csvfile (_type_): _description_
@@ -1071,10 +1071,10 @@ def find_sustation_group(mol, mother_atom:int, ignore_atoms = []):
 #     return smiles, energy
 
 
-# 处理构象问题的最后手段：彻底的剪切分子
+# Fallback for difficult conformers: fragment the molecule.
 # from functools import reduce
 # def is_sp3(atom):
-#     """判断一个原子是否为sp3杂化
+#     """Check whether an atom is sp3-hybridized.
 
 #     Args:
 #         atom (rdkit.Atom): 
@@ -1087,7 +1087,7 @@ def find_sustation_group(mol, mother_atom:int, ignore_atoms = []):
 #     return num_bonds == 4 and hybridization == Chem.rdchem.HybridizationType.SP3
     
 # def find_common(list_of_set):
-#     """取多个集合的公共子集。
+#     """Return the intersection of multiple sets.
 
 #     Args:
 #         list_of_set (_type_): _description_
@@ -1097,7 +1097,7 @@ def find_sustation_group(mol, mother_atom:int, ignore_atoms = []):
 #     """    
 #     return set(reduce(np.intersect1d, np.array([list(each) for each in list_of_set])))
 # def find_all_in(list_of_set):
-#     # 取多个集合的并集。
+#     # Return the union of multiple sets.
 #     return_set = []
 #     for each in [list(return_atom_num_set) for return_atom_num_set in list_of_set]:
 #         return_set += each
@@ -1106,7 +1106,7 @@ def find_sustation_group(mol, mother_atom:int, ignore_atoms = []):
     
 
 # def find_neighbor_atom_number(mol, centers, times=3, require_sp3=True,consider_ring=True, exclude_atoms = []):
-#     """找到一个分子中，围绕指定的原子序号一定范围的原子编号集合，
+#     """Find atom indices within a specified number of bonds from the center atoms.
 
 #     Args:
 #         mol (_type_): _description_
@@ -1236,7 +1236,7 @@ def to_trans_cycloene(smiles="C1=C/CCCCCC/1", assert_bond_type=True, test_mod=Fa
         atom1.SetChiralTag(Chem.ChiralType.CHI_TETRAHEDRAL_CCW)
         atom2 = mol.GetAtomWithIdx(atom2_id)
         atom2.SetChiralTag(Chem.ChiralType.CHI_TETRAHEDRAL_CW)
-        # 加氢
+        # Sanitize the molecule after bond edits.
         AllChem.SanitizeMol(mol)
         for each in ring:
             mol.GetAtomWithIdx(each).SetAtomMapNum(50)
@@ -1246,7 +1246,7 @@ def to_trans_cycloene(smiles="C1=C/CCCCCC/1", assert_bond_type=True, test_mod=Fa
         smiles = Chem.MolToSmiles(mol)
         amol = smiles2mol(smiles, conf_num)
 
-        # 如果顺反不对，则切换手性
+        # Invert the stereochemistry if the alkene geometry is incorrect.
         if checkZE(amol, 0) > 0:
             atom2 = mol.GetAtomWithIdx(atom2_id)
             atom2.SetChiralTag(Chem.ChiralType.CHI_TETRAHEDRAL_CCW)
@@ -1254,7 +1254,7 @@ def to_trans_cycloene(smiles="C1=C/CCCCCC/1", assert_bond_type=True, test_mod=Fa
             mol.GetAtomWithIdx(atom_id).SetAtomMapNum(100)
             smiles = Chem.MolToSmiles(mol)
             amol = smiles2mol(smiles, conf_num)
-        # 筛选手性正确的构型
+        # Keep conformers with the required stereochemistry.
         new_mol = copy.deepcopy(amol)
         Chem.AllChem.EmbedMultipleConfs(new_mol, 0)
         new_conf_id = 0
@@ -1268,7 +1268,7 @@ def to_trans_cycloene(smiles="C1=C/CCCCCC/1", assert_bond_type=True, test_mod=Fa
                     new_conformer.SetAtomPosition(i, position[i])
                 new_mol.AddConformer(new_conformer)
                 new_conf_id += 1
-        # 删除原子
+        # Remove temporary atoms.
         if test_mod:
             return new_mol
         new_atom = [atom for atom in new_mol.GetAtoms() if atom.GetAtomMapNum() == 100][0]

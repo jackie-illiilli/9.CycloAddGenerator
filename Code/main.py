@@ -18,7 +18,7 @@ new_des = ['diene_area_0', 'diene_area_1', 'diene_area_2', 'diene_area_3', 'dien
 'ene_area_0', 'ene_area_1', 'ene_area_2', 'ene_area_3', 'ene_area_4', 'ene_area_5', 'ene_area_6', 'ene_area_7', ]
 AtomsIds = ["H", "C", "N", "O"]
     
-DIENE_ENE_DIR = r"G:\work\Secondary_Selection\Diene_Ene_Smiles"
+DIENE_ENE_DIR = r"E:\work\Secondary_Selection\Diene_Ene_Smiles"
 # DIENE_ENE_DIR = r"G:\work\First_calculation\Diene_Ene_Smiles"
 
 
@@ -62,7 +62,7 @@ def collect_smiles_file(csv_dirs, root_dir, sugan=True, old_smiles_csv = None):
             print(smiles)
             continue
         if len(mol.GetConformers()) == 0:
-            print("%s is not well" % smiles)
+            print("%s is invalid." % smiles)
 
         all_mols.append(mol)
         mol_name = "smilesid_%.5d" % (smiles_id + len(old_smiles))
@@ -141,7 +141,7 @@ def read_engs(opt_log_files, eng_dir, returnE=False):
     all_conf_id = []
     all_E_engs = []
     for opt_log_file in opt_log_files:
-        eng_log_files = glob.glob(eng_dir + "/" + os.path.split(opt_log_file)[1])
+        eng_log_files = glob.glob(eng_dir + "/" + os.path.split(opt_log_file)[1]) + glob.glob(eng_dir + "/" + os.path.split(opt_log_file)[1].replace('log', 'out'))
         if len(eng_log_files) == 0:
             continue
         assert len(eng_log_files) == 1
@@ -151,10 +151,14 @@ def read_engs(opt_log_files, eng_dir, returnE=False):
         except:
             conf_id = 0
         opt_log = logfile_process.Logfile(opt_log_file)
-        eng_log = logfile_process.Logfile(eng_log_file)
         assert len(opt_log.all_engs) == 5
         opt_G_cor = opt_log.all_engs[-1]
-        eng_SPE = eng_log.all_engs[0]
+
+        if eng_log_file.endswith(".log"):
+            eng_log = logfile_process.Logfile(eng_log_file)
+            eng_SPE = eng_log.all_engs[0]
+        else:
+            eng_SPE = format_change.read_orca_energy(eng_log_file)
         all_engs.append(opt_G_cor + eng_SPE)
         all_E_engs.append(eng_SPE)
         all_conf_id.append(conf_id)
@@ -185,7 +189,10 @@ def smiles_result_analysis(target_dir):
             smiles_dict["Stable_conf_id"][idx] = -1
             continue 
         # 
-        all_engs, all_conf_id, all_E_engs = read_engs(opt_log_files, eng_dir, returnE=1)
+        try:
+            all_engs, all_conf_id, all_E_engs = read_engs(opt_log_files, eng_dir, returnE=1)
+        except:
+            all_engs = []
         if len(all_engs) == 0:
             smiles_dict["G/Hatree"][idx] = "DFT ENG Fail"
             smiles_dict["Stable_conf_id"][idx] = -1
@@ -245,7 +252,7 @@ def update_log_to_mol(target_dir):
         Chem.MolToMolFile(new_mol, new_mol_dir +'smilesid_%.5d.mol' % smiles_index)
 
 
-def smiles_property_generate(appeared_idxs = [], file_name = 'property.csv', smiles_dict=pd.read_csv(r"G:\work\Secondary_Selection\Diene_Ene_Smiles\all_smiles.csv"), smiles_dir=r"G:\work\Secondary_Selection\Diene_Ene_Smiles"):
+def smiles_property_generate(appeared_idxs = [], file_name = 'property.csv', smiles_dict=pd.DataFrame(), smiles_dir=r"E:\work\Secondary_Selection\Diene_Ene_Smiles"):
     target_dict = {"Smiles":{}, "Smiles_Id":{}, "Type":{}, "Title":{}}
     for each in ALL_PROPERTIES_diene:
         
@@ -334,7 +341,7 @@ def smiles_property_generate(appeared_idxs = [], file_name = 'property.csv', smi
                     target_dict[each][target_dict_id] = value
                 target_dict_id += 1
             except:
-                continue
+                print("Error processing diene", smiles_id)
 
         ene_atom_lists = cycle_process.dieno_atom_Idx(mol)
         for each_ene_atom_list in ene_atom_lists:
@@ -371,6 +378,7 @@ def smiles_property_generate(appeared_idxs = [], file_name = 'property.csv', smi
                         ene_dipole = log.get_dipole()
                         require_property += ene_orbit_eng + [ene_dipole]
                     except:
+                        print("Energy error for ene", smiles_id)
                         continue
 
                     ene_L, ene_B1, ene_B5 = [], [], []
@@ -398,7 +406,7 @@ def smiles_property_generate(appeared_idxs = [], file_name = 'property.csv', smi
                         target_dict[each][target_dict_id] = value
                     target_dict_id += 1
                 except:
-                    continue
+                    print("Error processing ene", smiles_id)
     a = pd.DataFrame(target_dict)
     a.to_csv(smiles_dir + "/" + file_name)
 
@@ -466,9 +474,9 @@ def error_improve(target_dir, file_name, dust_bin='dust_bin', improve_name='impr
                 elif not opt_log.bond_attach:
                     fail = 1
                 if opt_log.file_type == "OM" and opt_log.unreal_freq == 0:
-                    print("%s may not be a right OM for unreal freq num of %d" % (opt_log.file_dir, opt_log.unreal_freq))
+                    print("%s may be an invalid optimization minimum (imaginary-frequency count: %d)." % (opt_log.file_dir, opt_log.unreal_freq))
                 if opt_log.file_type == "TS" and opt_log.unreal_freq == 0:
-                    print("%s is not a right TS for unreal freq num of %d" % (opt_log.file_dir, opt_log.unreal_freq))
+                    print("%s is not a valid transition state (unexpected imaginary-frequency count: %d)." % (opt_log.file_dir, opt_log.unreal_freq))
                     fail = 1
                 if opt_log.file_type == "IRC":
                     if opt_log.irc_result == False:
@@ -584,14 +592,14 @@ def collect_reaction_file(reaction_file_dir, target_dir, smiles_dir, smiles_csv_
         if acquire_title:
             acquire_title = reaction_csv_file["Title"][idx]
         if not (diene in all_smiles and ene in all_smiles):
-            print(diene, ene, "not in All_Smiles")
+            print(diene, ene, "not found in the reactant list")
             raise TypeError
         diene_csv_id = all_smiles.index(diene)
         ene_csv_id = all_smiles.index(ene)
         diene_id = smiles_dict["Index"][diene_csv_id]
         ene_id = smiles_dict["Index"][ene_csv_id]
         if smiles_dict['Stable_conf_id'][diene_csv_id] < 0 or smiles_dict['Stable_conf_id'][ene_csv_id] < 0:
-            print(diene, ene, "either one is unstable")
+            print(diene, ene, "one or both reactants are unstable")
             error_id = -1
             comfirm_dict, comfirm_dict_idx = write_comfirm_dict(comfirm_dict, idx, diene_id, ene_id, 0, error_id, comfirm_dict_idx, product_G="reactant unstable")
             continue
@@ -641,7 +649,7 @@ def collect_reaction_file(reaction_file_dir, target_dir, smiles_dir, smiles_csv_
                                 banned_ene_title.append([ene_index[0], ene_index[-1]])
 
             except:
-                print(diene, ene, "either one did't calc Hirshfeld charge")
+                print(diene, ene, "Hirshfeld charges are missing for one or both reactants")
                 error_id = -1
                 comfirm_dict, comfirm_dict_idx = write_comfirm_dict(comfirm_dict, idx, diene_id, ene_id, 0, error_id, comfirm_dict_idx, product_G="Hirshfeld charge")
                 continue
@@ -675,7 +683,7 @@ def collect_reaction_file(reaction_file_dir, target_dir, smiles_dir, smiles_csv_
                 product = Chem.MolToSmiles(mol)
                 comfirm_dict, comfirm_dict_idx = write_comfirm_dict(comfirm_dict, idx, diene_id, ene_id, structure_id, error_id, comfirm_dict_idx, product=product, title=title)
         if len(molgroup) == 0:
-            print("Diene %s, Ene %s, not find structure" % (all_smiles[diene_id], all_smiles[ene_id]))
+            print("No structure found for diene %s and ene %s" % (all_smiles[diene_id], all_smiles[ene_id]))
             error_id = -1
             comfirm_dict, comfirm_dict_idx = write_comfirm_dict(comfirm_dict, idx, diene_id, ene_id, 0, error_id, comfirm_dict_idx, product_G="product unstable")
             continue
@@ -771,7 +779,7 @@ def reaction_calc_om(target_dir, SELECT_BY_ENG=True, smiles_mol_dir=DIENE_ENE_DI
         diene_mol = glob.glob(smiles_mol_dir + '/mol/smilesid_%.5d*.mol' % diene_id)[0]
         diene_mol = Chem.MolFromMolFile(diene_mol, removeHs=False)
         if conf_id < 0:
-            print(mol_name, "Fail in DFT")
+            print(mol_name, "DFT calculation failed for")
             continue
         log_file = glob.glob(opt_file_dir + "/%s.log" % mol_name) 
         if len(log_file) == 0:
@@ -795,7 +803,7 @@ def reaction_calc_om(target_dir, SELECT_BY_ENG=True, smiles_mol_dir=DIENE_ENE_DI
                     dist_const = [[title[0] + 1, title[2] + title[4] + 1], [title[1] + 1, title[3] + title[4] + 1]]
                 xtb_input.append([mol_name, title, symbol_list, new2_position, charge, constrain_atoms, dist_const])
     if not use_gauss:
-        xtb_process.xtb_om(xtb_input, dir_path=om_dir, que="gamma", core=70)
+        xtb_process.xtb_om(xtb_input, dir_path=om_dir, que="gamma", core=60)
 
     # target_cos = -0.9396926
     # target_cos = -0.7660444
@@ -832,7 +840,7 @@ def reaction_calc_om_2( target_dir,
         diene_mol = glob.glob(smiles_mol_dir + '/mol/smilesid_%.5d.mol' % diene_id)[-1]
         diene_mol = Chem.MolFromMolFile(diene_mol, removeHs=False) 
         if conf_id < 0:
-            print(mol_name, "Fail in DFT")
+            print(mol_name, "DFT calculation failed for")
             continue
         if gaussian_input:
             log_file = glob.glob(om_dir_1 + "/%s.log" % mol_name) 
@@ -872,7 +880,7 @@ def reaction_calc_om_2( target_dir,
 
             xtb_input.append([mol_name, title, symbol_list, new2_position, charge, constrain_atoms, dist_const])
     if not use_gauss:
-        xtb_process.xtb_om(xtb_input, dir_path=om_dir_2, que="gamma", core=70)
+        xtb_process.xtb_om(xtb_input, dir_path=om_dir_2, que="gamma", core=60)
 
 
 def reaction_calc_ts(target_dir, om_name="om", ts_name="ts"):
@@ -886,8 +894,8 @@ def reaction_calc_ts(target_dir, om_name="om", ts_name="ts"):
         assert om_log.bond_attach
         cycle_process.om_to_ts(om_log, 1, new_dir=ts_dir)
 
-def reaction_calc_irc(target_dir, ts_name='ts', irc_name='irc', methods = None):
-    # 仅针对频率较低或者振动方向错误的
+def reaction_calc_irc(target_dir, ts_name='ts', irc_name='irc', methods = None, calc_all=True):
+    # Apply only to low-frequency modes or modes with an incorrect displacement direction.
     ts_file_dir = target_dir + "/" + ts_name
     irc_dir = target_dir + "/" + irc_name
     if not os.path.isdir(irc_dir):
@@ -897,12 +905,12 @@ def reaction_calc_irc(target_dir, ts_name='ts', irc_name='irc', methods = None):
         ts_log = logfile_process.Logfile(ts_log_file)
         assert ts_log.bond_attach
         if ts_log.is_right_ts:
-            if float(ts_log.first_unreal_freq) <= -300:
+            if float(ts_log.first_unreal_freq) <= -300 and not calc_all:
                 continue
             else:
-                print("%s May have wrong vibration freq: %.4f!!! " % (ts_log.file_dir, float(ts_log.first_unreal_freq)))
+                print("%s Unexpected imaginary frequency: %.4f" % (ts_log.file_dir, float(ts_log.first_unreal_freq)))
         else:
-            print("%s May have wrong vibration direction!!! " % ts_log.file_dir)
+            print("%s Unexpected transition-state mode direction:" % ts_log.file_dir)
         cycle_process.ts_to_irc(ts_log, new_dir=irc_dir, methods = methods)
 
 
@@ -919,6 +927,48 @@ def ts_SPE_DFT_calc(target_dir, ts_name='ts', eng_name = 'ts_eng', method="b3lyp
         title = " ".join(str(each) for each in title)
         format_change.block_to_gjf(symbol_list, position, new_log_name, charge, title,
                     method=method)
+
+
+def ts_SPE_DFT_calc_wb97mv(target_dir, ts_name='ts', eng_name='ts_eng_wb7mv'):
+    """Write ORCA single-point inputs with the wB97M-V method for TS logs."""
+    ts_file_dir = target_dir + "/" + ts_name
+    eng_dir = target_dir + "/" + eng_name
+    if not os.path.isdir(eng_dir):
+        os.makedirs(eng_dir)
+
+    log_files = glob.glob(ts_file_dir + "/" + "*.log")
+    for log_file in tqdm(log_files):
+        opt_log = logfile_process.Logfile(log_file)
+        assert len(opt_log.running_positions) != 0
+
+        symbol_list = opt_log.symbol_list
+        position = opt_log.running_positions[-1]
+        charge = opt_log.charge
+        multiplicity = opt_log.multiplicity
+        new_input_name = eng_dir + "/" + os.path.split(log_file)[-1].split('.')[0] + ".inp"
+
+        with open(new_input_name, "wt", newline="\n") as handle:
+            handle.write(
+                "! wB97M-V def2-TZVPP RIJCOSX def2/J def2-TZVPP/C "
+                "tightSCF noautostart defgrid3\n"
+            )
+            handle.write(
+                "%maxcore 2000\n"
+                "%pal nprocs 32 end\n"
+                "%scf\n"
+                "MaxIter 500\n"
+                "end\n\n"
+                "%cpcm\n"
+                "SMD true\n"
+                "SMDsolvent \"Water\"\n"
+                "end\n\n"
+            )
+            handle.write(f"* xyz {charge} {multiplicity}\n")
+            for atom, atom_position in zip(symbol_list, position):
+                handle.write(
+                    f"{atom} {atom_position[0]} {atom_position[1]} {atom_position[2]}\n"
+                )
+            handle.write("*\n")
 
 
 def reaction_irc_select(target_dir, ts_name='ts', irc_name='irc', dust_bin_name='ts_irc_fail'):
@@ -940,7 +990,7 @@ def reaction_irc_select(target_dir, ts_name='ts', irc_name='irc', dust_bin_name=
         if check_irc:
             irc_files = glob.glob(irc_dir + "/%s*.log" % os.path.split(ts_log.file_dir)[-1].split(".")[0])
             if len(irc_files) < 1:
-                print(ts_log.file_dir, "did't find right irc files")
+                print(ts_log.file_dir, "No valid IRC files found.")
                 new_log_name = dust_bin_dir + "/" + os.path.split(ts_log_file)[-1] 
                 new_log_name =  new_log_name.split(".")[0] + "%s.log" % ts_log.file_type
                 if not os.path.isdir(dust_bin_dir):
@@ -1043,7 +1093,7 @@ def check_product_stereo(target_dir):
             diene_is_right = cycle_process.check_stereo(diene_mol_file,atom_list[:split_index], position[:split_index])
             ene_is_right = cycle_process.check_stereo(ene_mol_file,atom_list[split_index:], position[split_index:])
             if not diene_is_right or not ene_is_right:
-                print(diene_id, ene_id, "has wrong stereo!")
+                print(diene_id, ene_id, "has incorrect stereochemistry.")
                 new_log_file = new_ts_dir + os.path.split(log_file)[-1]
                 shutil.move(log_file, new_log_file)
 
@@ -1175,7 +1225,7 @@ def reaction_ts_result_analysis(target_dir, smiles_csv_dir=DIENE_ENE_DIR + "/all
         if sep_react_path != None:
             diene_log_file = glob.glob(target_dir + "/" + sep_react_path + "/%.5d_%.5d_%.5d_%.4d_diene*.log" % (diene_id, ene_id, structure_id, min_conf_idx))
             if len(diene_log_file) != 1:
-                if deltaGa > 0 : print(diene_id, ene_id, structure_id, "check the number of sep_react files: %d" % len(diene_log_file))
+                if deltaGa > 0 : print(diene_id, ene_id, structure_id, "unexpected number of separated-reactant files: %d" % len(diene_log_file))
                 continue
             diene_log_file = diene_log_file[0]
             diene_log = logfile_process.Logfile(diene_log_file)
@@ -1184,7 +1234,7 @@ def reaction_ts_result_analysis(target_dir, smiles_csv_dir=DIENE_ENE_DIR + "/all
             reaction_dict["Diene_Distort"][idx] = diene_distort_eng
             ene_log_file = glob.glob(target_dir + "/" + sep_react_path + "/%.5d_%.5d_%.5d_%.4d_ene*.log" % (diene_id, ene_id, structure_id, min_conf_idx))
             if len(ene_log_file) != 1:
-                if deltaGa > 0 : print(diene_id, ene_id, structure_id, "check the number of sep_react files: %d" % len(ene_log_file))
+                if deltaGa > 0 : print(diene_id, ene_id, structure_id, "unexpected number of separated-reactant files: %d" % len(ene_log_file))
                 continue
             ene_log_file = ene_log_file[0]
             ene_log = logfile_process.Logfile(ene_log_file)
@@ -1196,8 +1246,192 @@ def reaction_ts_result_analysis(target_dir, smiles_csv_dir=DIENE_ENE_DIR + "/all
         # except:
         #     continue
     reaction_dict = pd.DataFrame(reaction_dict)
-    # return reaction_dict
-    reaction_dict.to_csv(target_dir + "/" + "Result_.csv", index=False)
+    return reaction_dict
+    # reaction_dict.to_csv(target_dir + "/" + "Result_.csv", index=False)
+
+
+def reaction_ts_result_analysis_wb97(
+        target_dir,
+        smiles_csv_dir=DIENE_ENE_DIR + "/all_smiles.csv",
+        write_title=False,
+        ts_name='ts',
+        reactant_eng_name='reactant_dft_eng_wb97mv',
+        ts_eng_name='ts_eng_wb97mv',
+        reactant_opt_name='reactant_dft',
+        single_point_program='auto',
+        delta_ga_name='deltaGa(wb97mv)'):
+    """Analyze TS reactions using Gaussian or ORCA single-point energies.
+
+    The single-point output format is detected automatically by default. Set
+    ``single_point_program`` to ``"gaussian"`` or ``"orca"`` to require a
+    specific format. Gaussian optimization logs supply the Gibbs free-energy
+    corrections. ``delta_ga_name`` controls the result column name, allowing
+    the method/solvent label to be changed without editing this function.
+    Product energies are intentionally not required because no product
+    single-point calculation is available.
+    """
+
+    single_point_program = str(single_point_program).strip().lower()
+    if single_point_program not in {"auto", "gaussian", "orca"}:
+        raise ValueError(
+            "single_point_program must be 'auto', 'gaussian', or 'orca'")
+    if not isinstance(delta_ga_name, str) or not delta_ga_name.strip():
+        raise ValueError("delta_ga_name must be a non-empty string")
+    delta_ga_name = delta_ga_name.strip()
+
+    ts_file_dir = os.path.join(target_dir, ts_name)
+    reactant_opt_dir = os.path.join(target_dir, reactant_opt_name)
+    reactant_eng_dir = os.path.join(target_dir, reactant_eng_name)
+    ts_eng_dir = os.path.join(target_dir, ts_eng_name)
+    title_dict = read_title(target_dir) if write_title else {}
+    reaction_dict = pd.read_csv(os.path.join(target_dir, "Result.csv")).to_dict()
+    smiles_dict = pd.read_csv(smiles_csv_dir).to_dict()
+    smiles_idxs = list(smiles_dict["Index"].values())
+
+    energy_fields = [
+        "product_G", "product_E", "TS_G", "TS_E", "deltaG", "deltaGa",
+        "deltaE", "deltaEa", "TS_G(Solvent)", "deltaGa(Solvent)",
+        "Diene_Distort", "Ene_Distort", "Interaction", "Special_Diene_E",
+        "Special_Diene_G", "Diene_E_ORCA", "Ene_E_ORCA", "Product_E_ORCA",
+        "TS_E_ORCA", "deltaGa(wb97mv)",
+    ]
+    if delta_ga_name not in energy_fields:
+        energy_fields.append(delta_ga_name)
+    for field in energy_fields:
+        reaction_dict.pop(field, None)
+    reaction_dict["Diene"] = {}
+    reaction_dict["Ene"] = {}
+    reaction_dict[delta_ga_name] = {}
+
+    def read_single_point_energy(file_name):
+        """Return the final Gaussian/ORCA electronic energy in Hartree."""
+        try:
+            with open(file_name, "rt", errors="replace") as handle:
+                lines = handle.readlines()
+        except OSError:
+            return None
+
+        program = single_point_program
+        if program == "auto":
+            if any("SCF Done:" in line for line in lines):
+                program = "gaussian"
+            elif any("FINAL SINGLE POINT ENERGY" in line for line in lines):
+                program = "orca"
+            else:
+                return None
+
+        normal_termination = (
+            "Normal termination of Gaussian" if program == "gaussian"
+            else "ORCA TERMINATED NORMALLY"
+        )
+        if not any(normal_termination in line for line in lines):
+            return None
+
+        marker = ("SCF Done:" if program == "gaussian"
+                  else "FINAL SINGLE POINT ENERGY")
+        energy_lines = [line for line in lines if marker in line]
+        if not energy_lines:
+            return None
+        try:
+            if program == "gaussian":
+                # Example: SCF Done: E(RB3LYP) = -388.615162459 A.U.
+                energy_text = energy_lines[-1].split("=", 1)[1].split()[0]
+            else:
+                energy_text = energy_lines[-1].split()[-1]
+            return float(energy_text.replace("D", "E"))
+        except (ValueError, IndexError):
+            return None
+
+    def exact_single_point_result(directory, stem):
+        for extension in (".log", ".out"):
+            file_name = os.path.join(directory, stem + extension)
+            if os.path.isfile(file_name):
+                energy = read_single_point_energy(file_name)
+                if energy is not None:
+                    return energy, file_name
+        return None, None
+
+    def read_gibbs_correction(file_name):
+        """Read Gaussian's thermal correction to Gibbs free energy."""
+        try:
+            opt_log = logfile_process.Logfile(file_name)
+            if opt_log is None or len(opt_log.all_engs) < 5:
+                return None
+            return float(opt_log.all_engs[-1])
+        except (OSError, TypeError, ValueError, IndexError, AttributeError):
+            return None
+
+    def set_failure(index, reason):
+        reaction_dict[delta_ga_name][index] = reason
+        reaction_dict["conf_id"][index] = -1
+
+    for idx, _ in tqdm(enumerate(list(reaction_dict["Reaction_Index"]))):
+        diene_id = reaction_dict["Diene_Index"][idx]
+        ene_id = reaction_dict["Ene_Index"][idx]
+        structure_id = reaction_dict["Structure_id"][idx]
+        diene_csv_id = smiles_idxs.index(diene_id)
+        ene_csv_id = smiles_idxs.index(ene_id)
+        reaction_dict["Diene"][idx] = smiles_dict["Smiles"][diene_csv_id]
+        reaction_dict["Ene"][idx] = smiles_dict["Smiles"][ene_csv_id]
+
+        diene_conf_id = int(smiles_dict["Stable_conf_id"][diene_csv_id])
+        ene_conf_id = int(smiles_dict["Stable_conf_id"][ene_csv_id])
+        if diene_conf_id < 0 or ene_conf_id < 0:
+            set_failure(idx, "Reactant ENG Fail")
+            continue
+
+        diene_stem = "smilesid_{:05d}_{:04d}".format(diene_id, diene_conf_id)
+        ene_stem = "smilesid_{:05d}_{:04d}".format(ene_id, ene_conf_id)
+        diene_E, _ = exact_single_point_result(reactant_eng_dir, diene_stem)
+        ene_E, _ = exact_single_point_result(reactant_eng_dir, ene_stem)
+        diene_corr = read_gibbs_correction(
+            os.path.join(reactant_opt_dir, diene_stem + ".log"))
+        ene_corr = read_gibbs_correction(
+            os.path.join(reactant_opt_dir, ene_stem + ".log"))
+        if diene_E is None or ene_E is None or diene_corr is None or ene_corr is None:
+            set_failure(idx, "Reactant ENG Fail")
+            continue
+
+        mol_name = "{:05d}_{:05d}_{:05d}".format(diene_id, ene_id, structure_id)
+
+        ts_log_files = glob.glob(os.path.join(ts_file_dir, mol_name + "*.log"))
+        if len(ts_log_files) == 0:
+            set_failure(idx, "TS OPT Fail")
+            continue
+        ts_results = []
+        for ts_log_file in ts_log_files:
+            ts_stem = os.path.splitext(os.path.basename(ts_log_file))[0]
+            ts_E, ts_result_file = exact_single_point_result(ts_eng_dir, ts_stem)
+            if ts_E is None:
+                continue
+            try:
+                ts_conf_id = int(ts_stem.split("_")[-1])
+            except ValueError:
+                ts_conf_id = -1
+            ts_corr = read_gibbs_correction(ts_log_file)
+            if ts_corr is None:
+                continue
+            ts_results.append((ts_E, ts_corr, ts_conf_id, ts_result_file))
+        if len(ts_results) == 0:
+            set_failure(idx, "TS ENG Fail")
+            continue
+        # Select the lowest corrected TS energy, not the lowest raw SPE.
+        ts_E, ts_corr, ts_conf_id, _ = min(
+            ts_results, key=lambda item: item[0] + item[1])
+
+        reaction_dict["conf_id"][idx] = ts_conf_id
+
+        reaction_dict[delta_ga_name][idx] = 627.5 * (
+            (ts_E + ts_corr)
+            - (diene_E + diene_corr)
+            - (ene_E + ene_corr)
+        )
+
+        if write_title:
+            reaction_dict["Title"][idx] = title_dict[mol_name]
+
+    return pd.DataFrame(reaction_dict)
+
 
 def reaction_analysis(target_dir, opt_name='ts', eng_name='ts_eng', result_csv = 'test.csv'):
     opt_dir = target_dir + "/" + opt_name
@@ -1329,7 +1563,7 @@ def ts_Z_E_check(target_dir, smiles_csv_dir=DIENE_ENE_DIR + "/all_smiles.csv", t
 
         for ts_log_file in ts_log_files:
             try:
-                print("process : %s" % ts_log_file, end='\r')
+                print("Processing: %s" % ts_log_file, end='\r')
                 is_error = []
                 ts_log = logfile_process.Logfile(ts_log_file)
                 position_list = ts_log.running_positions[-1]
@@ -1341,7 +1575,7 @@ def ts_Z_E_check(target_dir, smiles_csv_dir=DIENE_ENE_DIR + "/all_smiles.csv", t
                     if len(is_error) > 0:break
                     is_error = cycle_process.check_double_bond_ZE(mol, old_position, new_position, ignore_H=ignore_H)
                 if len(is_error) > 0:
-                    print(ts_log.file_dir, "TS ZE is wrong!!!!!", is_error)
+                    print(ts_log.file_dir, "transition-state alkene stereochemistry mismatch:", is_error)
                     if move_file:
                         old_mol_dft_files = glob.glob(ts_dir + "/%s*.log" % mol_name)
                         for each in old_mol_dft_files:
@@ -1373,7 +1607,7 @@ def check_ts_stereo(target_dir, ts_name='ts', wrong_ts_name='ts_wrong_stereo'):
             position = opt_log.running_positions[-1]
             is_right = cycle_process.check_stereo(mol_file, atom_list, position)
             if not diene_is_right or not ene_is_right:
-                print(diene_id, ene_id, "has wrong stereo!")
+                print(diene_id, ene_id, "has incorrect stereochemistry.")
                 new_log_file = new_ts_dir + os.path.split(log_file)[-1]
                 shutil.move(log_file, new_log_file)
 
@@ -1418,7 +1652,7 @@ def reaction_distort_interaction_analysis(target_dir, smiles_csv_dir=DIENE_ENE_D
         if type == 'both' or type == 'diene':
             diene_log_file = glob.glob(target_dir + "/" + react_dir + "/%.5d_%.5d_%.5d_%.4d_diene*.log" % (diene_id, ene_id, structure_id, conf_id))
             if len(diene_log_file) != 1:
-                if deltaGa > 0 : print(diene_id, ene_id, structure_id, conf_id, "check the number of sep_react files: %d" % len(diene_log_file))
+                if deltaGa > 0 : print(diene_id, ene_id, structure_id, conf_id, "unexpected number of separated-reactant files: %d" % len(diene_log_file))
                 continue
             diene_log_file = diene_log_file[0]
             diene_log = logfile_process.Logfile(diene_log_file)
@@ -1430,7 +1664,7 @@ def reaction_distort_interaction_analysis(target_dir, smiles_csv_dir=DIENE_ENE_D
         if type == 'both' or type == 'ene':
             ene_log_file = glob.glob(target_dir + "/" + react_dir + "/%.5d_%.5d_%.5d_%.4d_ene*.log" % (diene_id, ene_id, structure_id, conf_id))
             if len(ene_log_file) != 1:
-                if deltaGa > 0 : print(diene_id, ene_id, structure_id, conf_id, "check the number of sep_react files: %d" % len(ene_log_file))
+                if deltaGa > 0 : print(diene_id, ene_id, structure_id, conf_id, "unexpected number of separated-reactant files: %d" % len(ene_log_file))
                 continue
             ene_log_file = ene_log_file[0]
             ene_log = logfile_process.Logfile(ene_log_file)

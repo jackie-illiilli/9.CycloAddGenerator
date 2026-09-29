@@ -1,4 +1,4 @@
-# 一些文件转换的脚本写在这里
+# File-format conversion utilities.
 import pandas as pd
 import shutil, os
 from . import Tool
@@ -47,7 +47,7 @@ def xyz_to_gjf(choose="opt"):
             af.write("\n\n")
 
 def mol_to_xyz(mol, atom_list=None, position_list=None, file_dir="test.xyz",title=None):
-    """最基础的mol转化为xyz文件的过程
+    """Convert a molecule to an XYZ file.
 
     Args:
         mol (Chem.Mol): 
@@ -59,7 +59,7 @@ def mol_to_xyz(mol, atom_list=None, position_list=None, file_dir="test.xyz",titl
         filename: _description_
     """   
     if mol is None and (atom_list is None or position_list is None):
-        print("mol, atom_list/position_list must contain one")
+        print("Provide either a molecule or both atom_list and position_list.")
         return None 
     file_dir = file_dir.split(".")[0]
     if mol is not None:
@@ -137,7 +137,7 @@ def block_to_gjf(symbol_list, positions, file="test_data/mol2gjf.gjf", charge=0,
         method (str, optional): _description_. Defaults to "opt freq b3lyp/6-311g(d,p)".
         method2 (_type_, optional): _description_. Defaults to None.
         freeze (_type_, optional): Freeze atoms, as TS calculation. Defaults to [].
-        savechk (str, optional): Name of Chkfile, 省略.chk. Defaults to None.
+        savechk (str, optional): Name of Chkfile, Omit the .chk extension. Defaults to None.
     """    
     file_dir, filename = os.path.split(file)
     if not os.path.isdir(file_dir):
@@ -212,7 +212,7 @@ def write_smi_csv(smiles_list, file_name, start_id=0):
     if not os.path.isdir(file_dir):
         os.mkdir(file_dir)
     a = pd.DataFrame(a)
-    a.to_csv(file_name)
+    a.to_csv(file_name, index=False)
 
 def read_chg_file(file):
     return_dict = {"index":{}, "symbol":{}, "charge":{}}
@@ -235,3 +235,12 @@ def read_chg_from_sdf(file):
         return_dict["symbol"][idx] = atom.GetSymbol()
         return_dict["charge"][idx] = atom.GetPropsAsDict()["molFileAlias"]
     return pd.DataFrame(return_dict)
+
+def read_orca_energy(file_):
+    with open(file_, "rt") as f:
+        eng = 0
+        for line in f.readlines():
+            if "FINAL SINGLE POINT ENERGY" in line:
+                eng = float(line.split()[-1])
+                break
+    return eng

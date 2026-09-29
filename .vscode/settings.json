@@ -1,3 +1,5 @@
 {
-    "liveServer.settings.port": 5629
+    "liveServer.settings.port": 5629,
+    "python-envs.defaultEnvManager": "ms-python.python:conda",
+    "python-envs.defaultPackageManager": "ms-python.python:conda"
 }
