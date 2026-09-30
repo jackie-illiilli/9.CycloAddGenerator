@@ -1431,6 +1431,19 @@ def plot_mes_correlation_panel(df, columns=None):
     from matplotlib import pyplot as plt
 
     contribution_col = "Diene Distortion Contribution"
+    display_labels = {
+        "Diene_Distort": r"$\Delta E_{\mathrm{dist-4\pi}}$",
+        contribution_col: r"$f_{4\pi}$",
+        "MeS_deltaG": r"$\Delta G_{\mathrm{rxn,MeS}}$",
+        "MeS_deltaGa": r"$\Delta G^{\ddagger}_{\mathrm{MeS}}$",
+        "deltaGa(Solvent)": r"$\Delta G^{\ddagger}_{\mathrm{DA}}$",
+    }
+    axis_labels = {
+        "Diene_Distort": r"$\Delta E_{\mathrm{dist-4\pi}}$ (kcal mol$^{-1}$)",
+        contribution_col: r"$f_{4\pi}$",
+        "MeS_deltaG": r"$\Delta G_{\mathrm{rxn,MeS}}$ (kcal mol$^{-1}$)",
+        "MeS_deltaGa": r"$\Delta G^{\ddagger}_{\mathrm{MeS}}$ (kcal mol$^{-1}$)",
+    }
     plot_source = df.copy()
     if {"Diene_Distort", "Ene_Distort"}.issubset(plot_source.columns):
         diene_distort = pd.to_numeric(plot_source["Diene_Distort"], errors="coerce")
@@ -1448,8 +1461,8 @@ def plot_mes_correlation_panel(df, columns=None):
 
     pearson = plot_df.corr(method="pearson")
     spearman = plot_df.corr(method="spearman")
-    display(pearson)
-    display(spearman)
+    display(pearson.rename(index=display_labels, columns=display_labels))
+    display(spearman.rename(index=display_labels, columns=display_labels))
 
     pair_columns = [
         col for col in ["Diene_Distort", contribution_col, "MeS_deltaG", "MeS_deltaGa"]
@@ -1474,9 +1487,9 @@ def plot_mes_correlation_panel(df, columns=None):
                         xs = np.linspace(np.nanmin(x), np.nanmax(x), 100)
                         ax.plot(xs, slope * xs + intercept)
                 if i == len(pair_columns) - 1:
-                    ax.set_xlabel(x_col)
+                    ax.set_xlabel(axis_labels.get(x_col, display_labels.get(x_col, x_col)))
                 if j == 0:
-                    ax.set_ylabel(y_col)
+                    ax.set_ylabel(axis_labels.get(y_col, display_labels.get(y_col, y_col)))
         plt.tight_layout()
         plt.show()
 
