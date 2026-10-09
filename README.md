@@ -16,7 +16,7 @@ The detailed notebook lists and required inputs are described in the guides for 
 
 ## Environment
 
-Use requirements.txt as a starting point for the Python environment. It is a legacy dependency list rather than a complete lock file. Some workflows require additional packages, including ChemProp and PyTorch Lightning, as well as external Gaussian and xTB/CREST installations. Check the setup cells for the notebook being used.
+Use requirements.txt as a starting point for the Python environment. It is a legacy dependency list rather than a complete lock file. Some workflows require additional packages, including Hyperopt for fingerprint tuning, ChemProp, and PyTorch Lightning, as well as external Gaussian and xTB/CREST installations. Check the setup cells for the notebook being used.
 
 ## Data availability and reproducibility limits
 

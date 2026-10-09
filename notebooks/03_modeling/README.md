@@ -7,7 +7,7 @@ These notebooks cover model fitting, representation benchmarks, generalization t
 | 01_energy_landscape.ipynb | Inspect the energy and descriptor inputs and generate diagnostic plots |
 | 02_main_cv_ablation.ipynb | Fit the primary models and compare descriptor combinations |
 | 03_fingerprint_generation.ipynb | Prepare alternative molecular representations |
-| 04_fingerprint_benchmark.ipynb | Compare representation and model configurations |
+| 04_fingerprint_benchmark.ipynb | Compare representations and models; includes fixed-parameter and nested TPE benchmarks |
 | 05_generalization_tests.ipynb | Evaluate grouped and reactant-holdout splits |
 | 06_candidate_dft_comparison.ipynb | Compare model predictions with selected DFT records |
 | 07_svo_variant_generation.ipynb | Generate the alternative SVO descriptor map |
@@ -16,6 +16,8 @@ These notebooks cover model fitting, representation benchmarks, generalization t
 | 10_ChemProp.ipynb | Run the ChemProp reaction-graph baseline |
 
 The notebooks use the saved energy tables in Data/DFT_Result and descriptor maps in Data/Descriptors. Configure paths and random seeds in each notebook before running it. ChemProp workflows require ChemProp and PyTorch Lightning in addition to the packages listed in requirements.txt.
+
+The nested TPE search in 04_fingerprint_benchmark.ipynb requires Hyperopt, which is not pinned in requirements.txt (`pip install hyperopt`). By default, it tunes the PhysOrg + SVO representation with five-fold inner and outer validation; edit the notebook's selection settings to change the scope. This search is compute-intensive.
 
 ## Reproduction limits
 
