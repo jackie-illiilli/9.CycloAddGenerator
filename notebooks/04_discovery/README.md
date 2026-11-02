@@ -9,6 +9,7 @@ Run the notebooks in order. Each notebook locates the repository root and loads 
 | 03_iedda_and_distortion_selection.ipynb | Classify IEDDA candidates, compare distortion and interaction distributions, and apply the distortion-fraction selection |
 | 04_reported_bo_reference.ipynb | Compare candidates with the curated reported-reaction reference set |
 | 05_purchasability_and_dft_validation.ipynb | Review candidate availability and compare selected predictions with DFT records |
+| 06_draw_selected_reactions.ipynb | Draw every reaction in 5_DI_selected.csv without explicit H atoms, highlight new bond sites using validated AAM, and export SVG drawings with an HTML index |
 
 The selection notebook uses the curated reference data in Data/Reported_BO. Keep the intermediate tables and reactant identifiers aligned across stages.
 

@@ -22,6 +22,7 @@ Use requirements.txt as a starting point for the Python environment. It is a leg
 
 - The original ZINC download snapshot is not included. The saved reactant lists can be reused, but the original database query and exact selection cannot be reconstructed without the same source files.
 - Selected energy and descriptor tables are provided, but the complete optimized-structure set and raw Gaussian/xTB logs are not. New DFT, transition-state, and IRC calculations cannot be reproduced from this repository alone.
+- The 8,273 selected transition-state geometries are provided in [Data/DFT_Result/all_ts.xyz](Data/DFT_Result/all_ts.xyz), in the exact row order of Active_Energy_for_AttFP.csv. See the [DFT data guide](Data/DFT_Result/README.md) for identifiers, coordinate conventions, and the export command.
 - The descriptor files in Data/Descriptors are filtered, precomputed subsets. The full source descriptor tables and their source calculation files are not included, so the subsets cannot be regenerated here.
 - The full conformer collection and some pretrained molecular representations required by the fingerprint benchmark are external inputs.
 - Full reaction-space prediction and the historical methanethiolate calculations require external descriptor maps, curated input tables, and completed calculation logs that are not bundled.

@@ -1,0 +1,5 @@
+﻿scenario,selected_reaction_rows,additional_vs_current_gt_0.64,additional_with_both_reactants_priced_or_unregistered,ratio_interval_for_additions,comparison_population
+f4pi > 0.60,239,155,12,"(0.60, 0.64]",4_IEDDA_select.csv
+f4pi > 0.55,781,697,73,"(0.55, 0.64]",4_IEDDA_select.csv
+f4pi > 0.66,65,0,,"currently selected rows excluded: (0.64, 0.66]",4_IEDDA_select.csv
+current: f4pi > 0.64,84,0,,strict cutoff,4_IEDDA_select.csv
