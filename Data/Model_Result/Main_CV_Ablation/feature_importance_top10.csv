@@ -1,0 +1,41 @@
+target,feature,importance
+Aqueous activation free energy,predicted reaction energy,14.575796
+Ene distortion,predicted reaction energy,14.197998
+Diene distortion,predicted reaction energy,14.046346
+Diene distortion,angle_b_cos,11.765687
+Aqueous activation free energy,angle_b_cos,9.878788
+Diene distortion,distance_ad,9.82803
+Diene distortion,diene_area_1,9.252803
+Aqueous activation free energy,distance_ad,7.322401
+Aqueous activation free energy,diene_lumo,6.805033
+Ene distortion,ene_charge_f,6.090811
+Ene distortion,ene_charge_e,5.814593
+Aqueous activation free energy,ene_lumo,5.770732
+Interaction,ene_lumo,5.688442
+Ene distortion,ene_min_angle_cos,5.524798
+Interaction,bond2,5.042962
+Ene distortion,min_ene_B1,4.959611
+Interaction,diene_charge_d,4.770329
+Interaction,diene_area_4,4.623601
+Diene distortion,diene_max_angle_cos,4.477501
+Diene distortion,diene_lumo,4.40095
+Interaction,predicted reaction energy,4.375577
+Interaction,ene_max_neighbor_charge,4.100632
+Ene distortion,ene_max_angle_cos,3.975003
+Diene distortion,bond2,3.420676
+Interaction,diene_max_charge,3.158513
+Aqueous activation free energy,diene_area_1,3.123837
+Ene distortion,max_ene_B1,3.010343
+Diene distortion,torsion,3.004279
+Interaction,ene_min_angle_cos,3.003361
+Interaction,diene_lumo,2.830205
+Ene distortion,min_ene_L,2.788212
+Interaction,min_ene_B1,2.748305
+Ene distortion,ene_max_neighbor_charge,2.649955
+Ene distortion,ene_area_0,2.546018
+Diene distortion,diene_charge_b,2.478422
+Aqueous activation free energy,ene_min_angle_cos,2.348449
+Aqueous activation free energy,diene_lumo+1,2.332495
+Diene distortion,diene_area_0,2.261642
+Aqueous activation free energy,ene_max_angle_cos,2.238402
+Aqueous activation free energy,diene_max_neighbor_charge,2.19862

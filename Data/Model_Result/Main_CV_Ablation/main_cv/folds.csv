@@ -1,0 +1,21 @@
+variant,fold,target,r2,mae,rmse
+PhysOrg + SVO + predicted reaction energy (broad),0,Diene distortion,0.9364675320884619,1.101129815948483,1.5332378364245964
+PhysOrg + SVO + predicted reaction energy (broad),0,Ene distortion,0.8210380716556971,1.1206641327447087,1.5540015791438857
+PhysOrg + SVO + predicted reaction energy (broad),0,Interaction,0.7993148918600372,1.5234305549517264,2.1978060810465565
+PhysOrg + SVO + predicted reaction energy (broad),0,Aqueous activation free energy,0.926461241201794,1.5535952619070048,2.1212518432403216
+PhysOrg + SVO + predicted reaction energy (broad),1,Diene distortion,0.9356280510783498,1.095526773126216,1.55793166646
+PhysOrg + SVO + predicted reaction energy (broad),1,Ene distortion,0.8256605507224374,1.1866541704812337,1.6200972587357991
+PhysOrg + SVO + predicted reaction energy (broad),1,Interaction,0.7749904040070763,1.5895530208963207,2.2540372502389716
+PhysOrg + SVO + predicted reaction energy (broad),1,Aqueous activation free energy,0.9235108183899112,1.5886093296092394,2.158948214778467
+PhysOrg + SVO + predicted reaction energy (broad),2,Diene distortion,0.9387714530189697,1.0510781075351119,1.5001895079057295
+PhysOrg + SVO + predicted reaction energy (broad),2,Ene distortion,0.8281902616077024,1.1706084881725236,1.6212833854619546
+PhysOrg + SVO + predicted reaction energy (broad),2,Interaction,0.7862386683085971,1.5965474168063671,2.2675449419722105
+PhysOrg + SVO + predicted reaction energy (broad),2,Aqueous activation free energy,0.9234279164309377,1.5858314661546027,2.1848418504857823
+PhysOrg + SVO + predicted reaction energy (broad),3,Diene distortion,0.9383590057391573,1.1040516491119992,1.536316396187623
+PhysOrg + SVO + predicted reaction energy (broad),3,Ene distortion,0.8308585187836037,1.1064029537555715,1.5336189553446737
+PhysOrg + SVO + predicted reaction energy (broad),3,Interaction,0.7821915791322042,1.5428462616060836,2.211606253790654
+PhysOrg + SVO + predicted reaction energy (broad),3,Aqueous activation free energy,0.9272348733078188,1.5453573570271393,2.0983825039429784
+PhysOrg + SVO + predicted reaction energy (broad),4,Diene distortion,0.9365015382793112,1.0925505502778934,1.5252138308512058
+PhysOrg + SVO + predicted reaction energy (broad),4,Ene distortion,0.8183846326564691,1.1613853118208033,1.628831011787487
+PhysOrg + SVO + predicted reaction energy (broad),4,Interaction,0.7894497331654267,1.5582643401617722,2.205334568906888
+PhysOrg + SVO + predicted reaction energy (broad),4,Aqueous activation free energy,0.9118213917355881,1.6774176364312645,2.3287168011711676

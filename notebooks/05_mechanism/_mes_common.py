@@ -1432,14 +1432,14 @@ def plot_mes_correlation_panel(df, columns=None):
 
     contribution_col = "Diene Distortion Contribution"
     display_labels = {
-        "Diene_Distort": r"$\Delta E_{\mathrm{dist-4\pi}}$",
+        "Diene_Distort": r"$\Delta E_{\mathrm{dist,4\pi}}$",
         contribution_col: r"$f_{4\pi}$",
         "MeS_deltaG": r"$\Delta G_{\mathrm{rxn,MeS}}$",
         "MeS_deltaGa": r"$\Delta G^{\ddagger}_{\mathrm{MeS}}$",
         "deltaGa(Solvent)": r"$\Delta G^{\ddagger}_{\mathrm{DA}}$",
     }
     axis_labels = {
-        "Diene_Distort": r"$\Delta E_{\mathrm{dist-4\pi}}$ (kcal mol$^{-1}$)",
+        "Diene_Distort": r"$\Delta E_{\mathrm{dist,4\pi}}$ (kcal mol$^{-1}$)",
         contribution_col: r"$f_{4\pi}$",
         "MeS_deltaG": r"$\Delta G_{\mathrm{rxn,MeS}}$ (kcal mol$^{-1}$)",
         "MeS_deltaGa": r"$\Delta G^{\ddagger}_{\mathrm{MeS}}$ (kcal mol$^{-1}$)",

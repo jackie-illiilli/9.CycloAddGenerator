@@ -15,3 +15,10 @@ __pycache__/
 # Local training and review artifacts
 catboost_info/
 .codex_review/
+
+# Local scratch files and tool caches
+/tmp/
+/temp/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

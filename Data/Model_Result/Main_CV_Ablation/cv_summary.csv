@@ -1,0 +1,17 @@
+variant,target,r2_mean,r2_std,mae_mean,mae_std,rmse_mean,rmse_std
+PhysOrg,Aqueous activation free energy,0.89225,0.008336,1.872894,0.057922,2.568486,0.103784
+PhysOrg,Diene distortion,0.927181,0.003111,1.180325,0.024824,1.647263,0.039951
+PhysOrg,Ene distortion,0.743087,0.009711,1.380924,0.039076,1.927654,0.070092
+PhysOrg,Interaction,0.731161,0.011212,1.733975,0.028112,2.499115,0.04693
+PhysOrg + SVO,Aqueous activation free energy,0.913849,0.006036,1.669199,0.044453,2.296909,0.081594
+PhysOrg + SVO,Diene distortion,0.934075,0.002007,1.115505,0.02584,1.567504,0.030753
+PhysOrg + SVO,Ene distortion,0.815824,0.007855,1.177005,0.020097,1.631353,0.030365
+PhysOrg + SVO,Interaction,0.785182,0.006116,1.569235,0.02204,2.234153,0.023284
+PhysOrg + SVO + predicted reaction energy (active only),Aqueous activation free energy,0.915906,0.005194,1.636804,0.046608,2.269589,0.073173
+PhysOrg + SVO + predicted reaction energy (active only),Diene distortion,0.934866,0.002214,1.101895,0.020957,1.557973,0.02901
+PhysOrg + SVO + predicted reaction energy (active only),Ene distortion,0.818966,0.007788,1.161731,0.026617,1.617451,0.035583
+PhysOrg + SVO + predicted reaction energy (active only),Interaction,0.786024,0.00787,1.568082,0.027196,2.229608,0.030878
+PhysOrg + SVO + predicted reaction energy (broad),Aqueous activation free energy,0.922491,0.006205,1.590162,0.052391,2.178428,0.090393
+PhysOrg + SVO + predicted reaction energy (broad),Diene distortion,0.937146,0.00135,1.088867,0.021604,1.530578,0.020859
+PhysOrg + SVO + predicted reaction energy (broad),Ene distortion,0.824826,0.005105,1.149143,0.034116,1.591566,0.044314
+PhysOrg + SVO + predicted reaction energy (broad),Interaction,0.786437,0.009,1.562128,0.030907,2.227266,0.031358

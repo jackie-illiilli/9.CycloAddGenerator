@@ -1,0 +1,20 @@
+{
+  "variants": [
+    "PhysOrg + SVO + predicted reaction energy (broad)"
+  ],
+  "n_splits": 5,
+  "seed": 0,
+  "shuffle": true,
+  "model_parameters": {
+    "task_type": "CPU",
+    "iterations": 10000,
+    "learning_rate": 0.01,
+    "depth": 6,
+    "verbose": false
+  },
+  "input_sha256": {
+    "Active_Energy.csv": "cb6ddca9243a945d2aa0a6544f20712fdf61dad066ad0134f249fd270e8d06cb",
+    "Rxn.csv": "48a9b6d4d082f0febac0af959e77ab6c26b745001302356d7a2ac607d2dc2ea4",
+    "Descriptors_.pkl": "285f81051cc21a0b11982e823d448685d3c0d0cac76fba3de64e1fe339b7325b"
+  }
+}

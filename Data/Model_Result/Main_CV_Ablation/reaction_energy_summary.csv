@@ -1,0 +1,5 @@
+dataset,r2_mean,r2_std,mae_mean,mae_std,rmse_mean,rmse_std
+Active: PhysOrg,0.956326,0.002961,1.705723,0.035979,2.460476,0.052483
+Active: PhysOrg + SVO,0.95792,0.002661,1.68006,0.031079,2.4154,0.04851
+Active: broad-data transfer,0.941358,0.005955,2.11372,0.081709,2.851321,0.167089
+Rxn: PhysOrg + SVO,0.982725,0.000929,2.436178,0.016822,3.640285,0.091451

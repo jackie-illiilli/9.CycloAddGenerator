@@ -387,7 +387,7 @@ def draw_heatmap(x_labels=[], y_labels=[], values=None, title=None, figure_size=
     plt.show()
     return plt
 
-def plot_scatter_with_metrics(x, y, title=None, min_=None, max_=None, alpha=1, savename='result', prediction=True, cmap='Reds', scatter=False, xticks=[], yticks=[]):
+def plot_scatter_with_metrics(x, y, title=None, min_=None, max_=None, alpha=1, savename='result', prediction=True, cmap='Reds', scatter=False, xticks=[], yticks=[],figsize=(4.5, 4.5)):
     """
     Plot a scatter or density plot and calculate regression metrics.
     
@@ -406,7 +406,7 @@ def plot_scatter_with_metrics(x, y, title=None, min_=None, max_=None, alpha=1, s
     mse = mean_squared_error(x, y)
 
     # Draw the scatter plot.
-    plt.figure(figsize=(4.5, 4.5), dpi=300)
+    plt.figure(figsize=figsize, dpi=300)
     if prediction:
         if min_ == None or max_ == None:
             min_ = np.min([x,y]) - 5
