@@ -1,0 +1,1459 @@
+[
+  {
+    "path": ".gitignore",
+    "bytes": 428,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": ".vscode/settings.json",
+    "bytes": 174,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "2_GaussianProcess copy.ipynb",
+    "bytes": 708713,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "3_model_train.ipynb",
+    "bytes": 4282720,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "Code/__init__.py",
+    "bytes": 80,
+    "status": "python_source"
+  },
+  {
+    "path": "Code/cycle_process.py",
+    "bytes": 63162,
+    "status": "python_source"
+  },
+  {
+    "path": "Code/draw_3d_map.py",
+    "bytes": 1641,
+    "status": "python_source"
+  },
+  {
+    "path": "Code/export_ts_xyz.py",
+    "bytes": 3813,
+    "status": "python_source"
+  },
+  {
+    "path": "Code/format_change.py",
+    "bytes": 9812,
+    "status": "python_source"
+  },
+  {
+    "path": "Code/gendes.py",
+    "bytes": 14232,
+    "status": "python_source"
+  },
+  {
+    "path": "Code/logfile_process.py",
+    "bytes": 29764,
+    "status": "python_source"
+  },
+  {
+    "path": "Code/main.py",
+    "bytes": 94795,
+    "status": "python_source"
+  },
+  {
+    "path": "Code/model_train.py",
+    "bytes": 36557,
+    "status": "python_source"
+  },
+  {
+    "path": "Code/Tool.py",
+    "bytes": 4692,
+    "status": "python_source"
+  },
+  {
+    "path": "Code/xtb_process.py",
+    "bytes": 17425,
+    "status": "python_source"
+  },
+  {
+    "path": "Data/Analysis_DI_Selection_Reported_BO/BO_data_csv.csv",
+    "bytes": 61905,
+    "status": "used_table",
+    "rows": 160,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Analysis_DI_Selection_Reported_BO/distortion_distribution.png",
+    "bytes": 178750,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Analysis_DI_Selection_Reported_BO/distortion_x_distribution.png",
+    "bytes": 75027,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Analysis_DI_Selection_Reported_BO/distortion_x_distribution_vertical.png",
+    "bytes": 92473,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Analysis_DI_Selection_Reported_BO/distortion_x_distribution_vertical_mirrored.png",
+    "bytes": 92796,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Analysis_DI_Selection_Reported_BO/endpoint_corrected_ln_plot.pdf",
+    "bytes": 11974,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Analysis_DI_Selection_Reported_BO/endpoint_corrected_ln_plot.png",
+    "bytes": 263782,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Analysis_DI_Selection_Reported_BO/FMO_Energy.csv",
+    "bytes": 1046272,
+    "status": "catalog_table",
+    "rows": 17829,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Analysis_DI_Selection_Reported_BO/fmo_gap_distribution.png",
+    "bytes": 552916,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Analysis_DI_Selection_Reported_BO/fmo_gap_distribution.svg",
+    "bytes": 561183,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/Descriptors/Descriptors.csv",
+    "bytes": 2976090,
+    "status": "used_table",
+    "rows": 8637,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Descriptors/Descriptors_.csv",
+    "bytes": 3400659,
+    "status": "used_table",
+    "rows": 8637,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Descriptors/Descriptors_.pkl",
+    "bytes": 4940382,
+    "status": "descriptor_key_inventory"
+  },
+  {
+    "path": "Data/Descriptors/Descriptors_SVO_2.0.pickle",
+    "bytes": 7467335,
+    "status": "descriptor_key_inventory"
+  },
+  {
+    "path": "Data/Descriptors/README.md",
+    "bytes": 1188,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/DFT_Result/Active_Energy.csv",
+    "bytes": 2936455,
+    "status": "used_table",
+    "rows": 8273,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/DFT_Result/Active_Energy_for_AttFP.csv",
+    "bytes": 7359221,
+    "status": "used_table",
+    "rows": 8273,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/DFT_Result/Active_Energy_for_AttFP_with_FMO.csv",
+    "bytes": 2539457,
+    "status": "used_table",
+    "rows": 8273,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/DFT_Result/all_ts.xyz",
+    "bytes": 9325112,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/DFT_Result/Descriptors_Filter.pkl",
+    "bytes": 7417110,
+    "status": "descriptor_key_inventory"
+  },
+  {
+    "path": "Data/DFT_Result/DFT_EXP.csv",
+    "bytes": 3121,
+    "status": "used_table",
+    "rows": 7,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/DFT_Result/Full_Space.csv",
+    "bytes": 11227214,
+    "status": "used_table",
+    "rows": 52681,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/DFT_Result/README.md",
+    "bytes": 1391,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/DFT_Result/Rxn.csv",
+    "bytes": 13065418,
+    "status": "used_table",
+    "rows": 50161,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/DFT_Result/test.csv",
+    "bytes": 1021985,
+    "status": "used_table",
+    "rows": 827,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/DFT_Result/train.csv",
+    "bytes": 8186780,
+    "status": "used_table",
+    "rows": 6618,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/DFT_Result/valid.csv",
+    "bytes": 1028290,
+    "status": "used_table",
+    "rows": 828,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Distortion_Interaction_in_Paper.xlsx",
+    "bytes": 30389,
+    "status": "xlsx_cell_values"
+  },
+  {
+    "path": "Data/FMO_Energy.csv",
+    "bytes": 1046272,
+    "status": "catalog_table",
+    "rows": 17829,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/GaussianSample/run422.sh",
+    "bytes": 361,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/GaussianSample/run_new.sh",
+    "bytes": 360,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/GaussianSample/run_old.sh",
+    "bytes": 417,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/GaussianSample/run_paratera.sh",
+    "bytes": 473,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/GaussianSample/runsugon.sh",
+    "bytes": 422,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/GaussianSample/zsubrun_422",
+    "bytes": 235,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/GaussianSample/zsubrun_new",
+    "bytes": 236,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/GaussianSample/zsubrun_old",
+    "bytes": 236,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/GaussianSample/zsubrun_paratera",
+    "bytes": 243,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/GaussianSample/zsubrun_sugan",
+    "bytes": 239,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/ablation/summary.csv",
+    "bytes": 1258,
+    "status": "used_table",
+    "rows": 12,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/cv_summary.csv",
+    "bytes": 1749,
+    "status": "used_table",
+    "rows": 16,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/feature_importance_top10.csv",
+    "bytes": 1777,
+    "status": "used_table",
+    "rows": 40,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/main_cv/feature_importance_top10.csv",
+    "bytes": 1777,
+    "status": "used_table",
+    "rows": 40,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/main_cv/folds.csv",
+    "bytes": 2595,
+    "status": "used_table",
+    "rows": 20,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/main_cv/oof_predictions.csv",
+    "bytes": 4008516,
+    "status": "used_table",
+    "rows": 33092,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/main_cv/plots/deltaGa_Solvent.png",
+    "bytes": 42315,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/main_cv/plots/Diene_Distort.png",
+    "bytes": 52624,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/main_cv/plots/Ene_Distort.png",
+    "bytes": 41685,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/main_cv/plots/Interaction.png",
+    "bytes": 43980,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/main_cv/run_settings.json",
+    "bytes": 583,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/main_cv/summary.csv",
+    "bytes": 817,
+    "status": "used_table",
+    "rows": 4,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/reaction_energy/folds.csv",
+    "bytes": 1630,
+    "status": "used_table",
+    "rows": 20,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/reaction_energy/oof_predictions.csv",
+    "bytes": 5518767,
+    "status": "used_table",
+    "rows": 74980,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/reaction_energy/plots/active_broad_transfer.png",
+    "bytes": 40747,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/reaction_energy/plots/active_physorg.png",
+    "bytes": 57844,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/reaction_energy/plots/active_physorg_svo.png",
+    "bytes": 57803,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/reaction_energy/plots/rxn_physorg_svo.png",
+    "bytes": 55399,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/reaction_energy/run_settings.json",
+    "bytes": 642,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/reaction_energy/summary.csv",
+    "bytes": 624,
+    "status": "used_table",
+    "rows": 4,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/reaction_energy_summary.csv",
+    "bytes": 359,
+    "status": "used_table",
+    "rows": 4,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Model_Result/Main_CV_Ablation/README.md",
+    "bytes": 3261,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/Model_Result/Molecular Fingerprint Results/ed_result.csv",
+    "bytes": 1710,
+    "status": "used_table",
+    "rows": 12,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Model_Result/Molecular Fingerprint Results/g_result.csv",
+    "bytes": 1703,
+    "status": "used_table",
+    "rows": 12,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Model_Result/Molecular Fingerprint Results/in_result.csv",
+    "bytes": 1708,
+    "status": "used_table",
+    "rows": 12,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Model_Result/Molecular Fingerprint Results/R2_result.csv",
+    "bytes": 6925,
+    "status": "used_table",
+    "rows": 55,
+    "encoding": "gb18030"
+  },
+  {
+    "path": "Data/Orbit.csv",
+    "bytes": 1172199,
+    "status": "catalog_table",
+    "rows": 17829,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/1_deltaG.csv",
+    "bytes": 11325188,
+    "status": "used_table",
+    "rows": 105124,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/2_deltaGa.csv",
+    "bytes": 3316252,
+    "status": "used_table",
+    "rows": 6216,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/3_DropDimer.csv",
+    "bytes": 1563603,
+    "status": "used_table",
+    "rows": 2932,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/4_IEDDA_drop.csv",
+    "bytes": 717703,
+    "status": "used_table",
+    "rows": 1343,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/4_IEDDA_select.csv",
+    "bytes": 846300,
+    "status": "used_table",
+    "rows": 1589,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_dropped.csv",
+    "bytes": 800893,
+    "status": "used_table",
+    "rows": 1505,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected.csv",
+    "bytes": 45807,
+    "status": "used_table",
+    "rows": 84,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/build_si_reactants.py",
+    "bytes": 9777,
+    "status": "python_source"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/captions.md",
+    "bytes": 3220,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/figure_manifest.csv",
+    "bytes": 32927,
+    "status": "used_table",
+    "rows": 84,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/README.md",
+    "bytes": 683,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/SI_reactions_01.png",
+    "bytes": 542168,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/SI_reactions_02.png",
+    "bytes": 531574,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/SI_reactions_03.png",
+    "bytes": 533140,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/SI_reactions_04.png",
+    "bytes": 554090,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/SI_reactions_05.png",
+    "bytes": 538810,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/SI_reactions_06.png",
+    "bytes": 557111,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/SI_reactions_07.png",
+    "bytes": 539942,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/SI_reactions_08.png",
+    "bytes": 556918,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/SI_reactions_09.png",
+    "bytes": 575894,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/SI_reactions_10.png",
+    "bytes": 558055,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/SI_reactions_11.png",
+    "bytes": 597421,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/SI_reactions_12.png",
+    "bytes": 600666,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/SI_reactions_13.png",
+    "bytes": 548548,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/SI_reactions_14.png",
+    "bytes": 555699,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/SI_reactions_all.pdf",
+    "bytes": 904470,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_reactants/SI_dienes_01.png",
+    "bytes": 695806,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_reactants/SI_dienes_02.png",
+    "bytes": 701207,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_reactants/SI_dienes_03.png",
+    "bytes": 633086,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_reactants/SI_enes_01.png",
+    "bytes": 604292,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_reactants/SI_enes_02.png",
+    "bytes": 497849,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_reactants/SI_reactants_all.pdf",
+    "bytes": 99606,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings_with_preparations/A4_figures/A4_reactions_01.png",
+    "bytes": 642022,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings_with_preparations/A4_figures/A4_reactions_02.png",
+    "bytes": 659055,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings_with_preparations/A4_figures/A4_reactions_03.png",
+    "bytes": 657796,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings_with_preparations/A4_figures/A4_reactions_04.png",
+    "bytes": 704931,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings_with_preparations/A4_figures/A4_reactions_05.png",
+    "bytes": 685708,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings_with_preparations/A4_figures/Reaxys_preparations_reactions_A4.pdf",
+    "bytes": 152394,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings_with_preparations/ChemDraw_CDXML/ChemDraw_reactions_01.cdxml",
+    "bytes": 38032,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings_with_preparations/ChemDraw_CDXML/ChemDraw_reactions_02.cdxml",
+    "bytes": 40848,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings_with_preparations/ChemDraw_CDXML/ChemDraw_reactions_03.cdxml",
+    "bytes": 39743,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings_with_preparations/ChemDraw_CDXML/ChemDraw_reactions_04.cdxml",
+    "bytes": 44477,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings_with_preparations/ChemDraw_CDXML/ChemDraw_reactions_05.cdxml",
+    "bytes": 45603,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings_with_preparations/ChemDraw_CDXML/ChemDraw_reactions_all.cdxml",
+    "bytes": 276813,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_reaction_drawings_with_preparations/ChemDraw_CDXML/README.md",
+    "bytes": 3366,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_Reaxys_with_preparations.csv",
+    "bytes": 16677,
+    "status": "used_table",
+    "rows": 30,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/5_DI_selected_Reaxys_with_preparations.pdf",
+    "bytes": 151922,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/Predict_DI/6_DI_selected_Purchasable.csv",
+    "bytes": 3506,
+    "status": "used_table",
+    "rows": 13,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/6_DI_selected_Purchasable_DFT_pred.csv",
+    "bytes": 5107,
+    "status": "used_table",
+    "rows": 13,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/build_preparation_doi_cdxml.py",
+    "bytes": 7134,
+    "status": "python_source"
+  },
+  {
+    "path": "Data/Predict_DI/F4pi_threshold_sensitivity/additions_gt_055_all.csv",
+    "bytes": 215729,
+    "status": "used_table",
+    "rows": 697,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/F4pi_threshold_sensitivity/additions_gt_055_price_or_unregistered.csv",
+    "bytes": 21288,
+    "status": "used_table",
+    "rows": 73,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/F4pi_threshold_sensitivity/additions_gt_060_all.csv",
+    "bytes": 47680,
+    "status": "used_table",
+    "rows": 155,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/F4pi_threshold_sensitivity/additions_gt_060_price_or_unregistered.csv",
+    "bytes": 3798,
+    "status": "used_table",
+    "rows": 12,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/F4pi_threshold_sensitivity/excluded_at_gt_066.csv",
+    "bytes": 5721,
+    "status": "used_table",
+    "rows": 19,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/F4pi_threshold_sensitivity/threshold_summary.csv",
+    "bytes": 435,
+    "status": "used_table",
+    "rows": 4,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/Purchasable_smiles.csv",
+    "bytes": 4541,
+    "status": "used_table",
+    "rows": 75,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Predict_DI/Reaxys_Preparation_DOI_Molecules.cdxml",
+    "bytes": 70681,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/Reported_BO/Reported Bioorthogonal Reactions for Selection.csv",
+    "bytes": 61128,
+    "status": "used_table",
+    "rows": 158,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Reported_BO/Result_min_deltaGa_Solvent_vs_Report.csv",
+    "bytes": 61120,
+    "status": "used_table",
+    "rows": 158,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/Reported_BO/Result_min_deltaGa_Solvent_vs_Report_DieneEneScaffold_deduplicated_manual_deduplicated.csv",
+    "bytes": 12840,
+    "status": "used_table",
+    "rows": 39,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/S2_TCO_kinetics_notebook_and_data/kinetics_extracted_wide.csv",
+    "bytes": 4162,
+    "status": "used_table",
+    "rows": 149,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/S2_TCO_kinetics_notebook_and_data/S2_stability_bar_chart.pdf",
+    "bytes": 13220,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/S2_TCO_kinetics_notebook_and_data/S2_stability_bar_chart.png",
+    "bytes": 267150,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/S2_TCO_kinetics_notebook_and_data/S2_TCO_kinetics_with_stability.ipynb",
+    "bytes": 321566,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "Data/S2_TCO_kinetics_notebook_and_data/S2_TCO_ln_A0_over_A_curves.pdf",
+    "bytes": 13693,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/S2_TCO_kinetics_notebook_and_data/S2_TCO_ln_A0_over_A_curves.png",
+    "bytes": 247510,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Data/ZINC_Data/all_diene.smi",
+    "bytes": 229268,
+    "status": "catalog_smiles"
+  },
+  {
+    "path": "Data/ZINC_Data/all_ene.smi",
+    "bytes": 615378,
+    "status": "catalog_smiles"
+  },
+  {
+    "path": "Data/ZINC_Data/all_selected_diene.smi",
+    "bytes": 54260,
+    "status": "used_smiles"
+  },
+  {
+    "path": "Data/ZINC_Data/all_selected_ene.smi",
+    "bytes": 58693,
+    "status": "used_smiles"
+  },
+  {
+    "path": "Data/ZINC_Data/all_selected_smiles.csv",
+    "bytes": 109964,
+    "status": "used_table",
+    "rows": 3000,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/ZINC_Data/all_smiles.csv",
+    "bytes": 1180783,
+    "status": "catalog_table",
+    "rows": 18659,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/ZINC_Data/all_smiles.smi",
+    "bytes": 25144044,
+    "status": "catalog_smiles"
+  },
+  {
+    "path": "Data/ZINC_Data/README.md",
+    "bytes": 1795,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Data/ZINC_Data/target_diene.csv",
+    "bytes": 154964,
+    "status": "used_table",
+    "rows": 2988,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/ZINC_Data/target_diene_ene.csv",
+    "bytes": 203565,
+    "status": "used_table",
+    "rows": 5976,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/ZINC_Data/target_diene_ene_Result.csv",
+    "bytes": 2901216,
+    "status": "used_table",
+    "rows": 17175,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/ZINC_Data/target_diene_passed.csv",
+    "bytes": 37369,
+    "status": "used_table",
+    "rows": 718,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/ZINC_Data/target_diene_raw.csv",
+    "bytes": 155533,
+    "status": "used_table",
+    "rows": 3000,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/ZINC_Data/target_ene.csv",
+    "bytes": 155310,
+    "status": "used_table",
+    "rows": 2925,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/ZINC_Data/target_ene_passed.csv",
+    "bytes": 95361,
+    "status": "used_table",
+    "rows": 1789,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Data/ZINC_Data/target_ene_raw.csv",
+    "bytes": 159252,
+    "status": "used_table",
+    "rows": 3000,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Exa.cds",
+    "bytes": 949,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Figure/4pd_alld.svg",
+    "bytes": 66740,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/all_find_BO_1.svg",
+    "bytes": 286940,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/all_find_BO_2.svg",
+    "bytes": 298117,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/all_find_BO_3.svg",
+    "bytes": 120917,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/B3D3-wb97mv/0-32.svg",
+    "bytes": 309586,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/B3D3-wb97mv/32-64.svg",
+    "bytes": 331693,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/B3D3-wb97mv/64-.svg",
+    "bytes": 155726,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/DI_selection_controls/iedda_reported_distortion_ratio.png",
+    "bytes": 96481,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Figure/DI_selection_controls/iedda_reported_distortion_ratio.svg",
+    "bytes": 63677,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/DI_selection_controls/iedda_reported_distortion_ratio_summary.csv",
+    "bytes": 370,
+    "status": "used_table",
+    "rows": 2,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Figure/DI_selection_controls/iedda_reported_energy_distribution_summary.csv",
+    "bytes": 1144,
+    "status": "used_table",
+    "rows": 8,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Figure/DI_selection_controls/iedda_reported_energy_distributions.png",
+    "bytes": 390250,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Figure/DI_selection_controls/iedda_reported_energy_distributions.svg",
+    "bytes": 234749,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/Figure_3_Correlation.png",
+    "bytes": 75197,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Figure/Figure_3_DIEnergies_Distribution.svg",
+    "bytes": 135600,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/Figure_3_DIEnergies_Distribution_deltaG.svg",
+    "bytes": 127055,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/Figure_3_Energies_Distribution.png",
+    "bytes": 291062,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Figure/Figure_3_Energies_Distribution.svg",
+    "bytes": 231770,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/Figure_3_FreeEnergies_Distribution.svg",
+    "bytes": 106659,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/Figure_BarrierWindow_DI_VerticalRidges.png",
+    "bytes": 442978,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Figure/Figure_BarrierWindow_DI_VerticalRidges.svg",
+    "bytes": 799306,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/Figure_BarrierWindow_Distortion_HorizontalRidges.png",
+    "bytes": 93248,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Figure/Figure_BarrierWindow_Distortion_HorizontalRidges.svg",
+    "bytes": 210696,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/Figure_BarrierWindow_Distortion_Interaction.png",
+    "bytes": 475558,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Figure/Figure_BarrierWindow_Distortion_Interaction_Overlay.png",
+    "bytes": 468780,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Figure/Figure_BarrierWindow_Distortion_VerticalRidges.png",
+    "bytes": 188394,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Figure/Figure_BarrierWindow_Distortion_VerticalRidges.svg",
+    "bytes": 409270,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/Figure_BarrierWindow_Interaction_HorizontalRidges.png",
+    "bytes": 97733,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Figure/Figure_BarrierWindow_Interaction_HorizontalRidges.svg",
+    "bytes": 209563,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/Figure_BarrierWindow_Interaction_VerticalRidges.png",
+    "bytes": 185828,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Figure/Figure_BarrierWindow_Interaction_VerticalRidges.svg",
+    "bytes": 405848,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/Figure_BEP_AqueousBarrier_vs_ReactionFreeEnergy.png",
+    "bytes": 792984,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Figure/Figure_SN_Descriptors_Correlation.svg",
+    "bytes": 831137,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/Figure_SN_Energies_Correlation.svg",
+    "bytes": 22883,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/final_smiles1.svg",
+    "bytes": 227054,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/final_smiles2.svg",
+    "bytes": 207794,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/output.svg",
+    "bytes": 188354,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/SVO/Concentration_vs_Time_BO.png",
+    "bytes": 74007,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Figure/SVO/Figure_1.png",
+    "bytes": 107481,
+    "status": "binary_visual_or_editor_file_no_ocr"
+  },
+  {
+    "path": "Figure/SVO/smilesid_00862_0000.log",
+    "bytes": 130082,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/SVO/smilesid_02209.mol",
+    "bytes": 913,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/SVO/smilesid_02209.xyz",
+    "bytes": 1435,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/SVO/smilesid_02209_0.xyz",
+    "bytes": 386,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/SVO/smilesid_02209_0000.log",
+    "bytes": 174737,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/SVO/smilesid_05944.mol",
+    "bytes": 757,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/SVO/smilesid_05944_0000.log",
+    "bytes": 224703,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/SVO/smilesid_11935.mol",
+    "bytes": 1012,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/SVO/smilesid_11935_0000.log",
+    "bytes": 210218,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/SVO/smilesid_17614.mol",
+    "bytes": 1621,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/SVO/smilesid_17614_0000.log",
+    "bytes": 509264,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Figure/SVO/smilesid_17614_0000_aligned.mol",
+    "bytes": 1621,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "Ignored/1_deltaG_selected.csv",
+    "bytes": 566304,
+    "status": "used_table",
+    "rows": 5256,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Ignored/7_MAA_calc_H2O_14_addition.ipynb",
+    "bytes": 179907,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "Ignored/7_MAA_calc_Me.ipynb",
+    "bytes": 95819,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "Ignored/7_MAA_calc_MeSH_alkene_addition.ipynb",
+    "bytes": 885878,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "Ignored/7_MAA_calc_MeSH_inner_salt.ipynb",
+    "bytes": 66750,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "Ignored/7_MAA_calc_OH.ipynb",
+    "bytes": 89094,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "Ignored/7_Potential_PAYN.csv",
+    "bytes": 17602,
+    "status": "used_table",
+    "rows": 39,
+    "encoding": "utf-8-sig"
+  },
+  {
+    "path": "Ignored/Descriptors_.pkl",
+    "bytes": 53908546,
+    "status": "full_descriptor_pool_not_selection_evidence"
+  },
+  {
+    "path": "notebooks/01_selection/1_select_4π_2π.ipynb",
+    "bytes": 1005957,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/01_selection/README.md",
+    "bytes": 779,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "notebooks/02_quantum/01_reactant_dft.ipynb",
+    "bytes": 6014,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/02_quantum/02_reactant_descriptors.ipynb",
+    "bytes": 8547,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/02_quantum/03_reaction_pair_generation.ipynb",
+    "bytes": 14410,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/02_quantum/04_reaction_dft_ts_irc.ipynb",
+    "bytes": 13082,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/02_quantum/05_legacy_cases_and_dft_experiment.ipynb",
+    "bytes": 28282,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/02_quantum/README.md",
+    "bytes": 1991,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "notebooks/03_modeling/01_energy_landscape.ipynb",
+    "bytes": 2419438,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/03_modeling/02_main_cv_ablation.ipynb",
+    "bytes": 604580,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/03_modeling/03_fingerprint_generation.ipynb",
+    "bytes": 6077,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/03_modeling/04_fingerprint_benchmark.ipynb",
+    "bytes": 13785,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/03_modeling/05_generalization_tests.ipynb",
+    "bytes": 49425,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/03_modeling/05_generalization_tests_.ipynb",
+    "bytes": 43221,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/03_modeling/06_candidate_dft_comparison.ipynb",
+    "bytes": 6037,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/03_modeling/07_svo_variant_generation.ipynb",
+    "bytes": 7271,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/03_modeling/08_svo_variant_benchmark.ipynb",
+    "bytes": 5668,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/03_modeling/09_training_fraction_seeds.ipynb",
+    "bytes": 904044,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/03_modeling/10_ChemProp.ipynb",
+    "bytes": 377267,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/03_modeling/_modeling_common.py",
+    "bytes": 4151,
+    "status": "python_source"
+  },
+  {
+    "path": "notebooks/03_modeling/README.md",
+    "bytes": 4474,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "notebooks/04_discovery/01_full_space_prediction.ipynb",
+    "bytes": 5234,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/04_discovery/02_energy_and_self_reaction_filter.ipynb",
+    "bytes": 6957,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/04_discovery/03_iedda_and_distortion_selection.ipynb",
+    "bytes": 745791,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/04_discovery/04_reported_bo_reference.ipynb",
+    "bytes": 353470,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/04_discovery/05_purchasability_and_dft_validation.ipynb",
+    "bytes": 6891,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/04_discovery/06_draw_selected_reactions.ipynb",
+    "bytes": 1584954,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/04_discovery/_discovery_comparison.py",
+    "bytes": 4501,
+    "status": "python_source"
+  },
+  {
+    "path": "notebooks/04_discovery/README.md",
+    "bytes": 1670,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "notebooks/05_mechanism/01_mes_product_inputs.ipynb",
+    "bytes": 4721,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/05_mechanism/02_mes_ts_irc_and_spe.ipynb",
+    "bytes": 8655,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/05_mechanism/03_mes_thermodynamics_and_kinetics.ipynb",
+    "bytes": 3429,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/05_mechanism/04_mes_distortion_and_correlations.ipynb",
+    "bytes": 238833,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/05_mechanism/05_da_mes_bond_length_analysis.ipynb",
+    "bytes": 20646,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/05_mechanism/06_historical_eight_point_correlation.ipynb",
+    "bytes": 3600,
+    "status": "notebook_source_and_text_tables"
+  },
+  {
+    "path": "notebooks/05_mechanism/_mes_common.py",
+    "bytes": 74550,
+    "status": "python_source"
+  },
+  {
+    "path": "notebooks/05_mechanism/README.md",
+    "bytes": 1432,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "notebooks/_workflow_paths.py",
+    "bytes": 1541,
+    "status": "python_source"
+  },
+  {
+    "path": "README.md",
+    "bytes": 5667,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "requirements.txt",
+    "bytes": 1018,
+    "status": "text_labels_and_structure_identifiers"
+  },
+  {
+    "path": "restore_all_smiles.py",
+    "bytes": 7124,
+    "status": "python_source"
+  }
+]

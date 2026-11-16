@@ -1,0 +1,293 @@
+{
+  "policy": "Actual datasets, candidate lists, explicit source/output references and prior descriptor subsets; exclude catalog-only molecules; full source wins for shared keys; retain every site and role for selected indices.",
+  "source_sha256": {
+    "Ignored/Descriptors_.pkl": "492c3a88781db0f793c9067d7f119ee5cf1830ac592d014f61e6b98cccf9eed6",
+    "Data/DFT_Result/Descriptors_Filter.pkl": "c0dcc0af86beda98ef7fad5694928bd0249f2ab6d553cf5802788597be92d501"
+  },
+  "full": {
+    "molecules": 17941,
+    "records": 92341,
+    "bytes": 53908546
+  },
+  "old": {
+    "molecules": 2329,
+    "records": 12728,
+    "bytes": 7417110
+  },
+  "merged": {
+    "molecules": 5325,
+    "records": 32797,
+    "bytes": 19257907,
+    "sha256": "78413a2fcdc8e4848eafa945e75b78ef4a8365393c9496b95efc338e65b94a35",
+    "added_molecules": 2996,
+    "added_records": 20069,
+    "records_by_role": {
+      "0": 24804,
+      "1": 7993
+    }
+  },
+  "requested_molecules": 5406,
+  "missing_indices": [
+    12059,
+    12061,
+    13156,
+    13723,
+    13767,
+    13783,
+    13784,
+    13785,
+    13791,
+    13792,
+    13795,
+    13827,
+    13832,
+    13913,
+    14087,
+    14143,
+    14190,
+    14197,
+    14230,
+    14563,
+    14571,
+    14924,
+    14934,
+    15203,
+    15204,
+    15205,
+    15214,
+    15533,
+    15704,
+    15745,
+    15833,
+    16065,
+    16513,
+    16660,
+    16739,
+    16763,
+    16810,
+    16811,
+    16831,
+    16843,
+    16968,
+    17405,
+    17486,
+    17489,
+    17520,
+    17525,
+    17548,
+    17615,
+    17620,
+    17649,
+    17679,
+    17680,
+    17681,
+    17687,
+    17708,
+    17716,
+    17737,
+    17740,
+    17748,
+    17751,
+    17752,
+    17759,
+    17766,
+    17778,
+    17780,
+    17783,
+    17823,
+    17837,
+    17842,
+    17846,
+    17847,
+    17849,
+    18016,
+    18034,
+    18053,
+    18087,
+    18098,
+    18113,
+    18123,
+    18354,
+    18384
+  ],
+  "catalog_only_molecules_excluded": 12519,
+  "all_catalogs_plus_used_available_molecules": 17844,
+  "overlap_records": 12728,
+  "numeric_conflicts": 12728,
+  "base_feature_conflict_keys": [
+    "18100 0 5 6",
+    "18100 0 6 5"
+  ],
+  "old_only_keys_preserved": [],
+  "files_inventoried": 265,
+  "syntax_skips": [],
+  "read_errors": [],
+  "unparsed_site_csv_rows": {},
+  "limitations": [
+    "PDF/raster/editor binary contents were not OCR-scanned; their filenames were checked and the available source tables and notebook text were scanned.",
+    "Only semantically labeled molecule IDs and exact catalog SMILES matches are interpreted; atom, row, reaction and conformation indices are not molecule IDs.",
+    "External paths are not followed; missing source descriptors are reported, not generated."
+  ],
+  "site_coverage": {
+    "Data/Analysis_DI_Selection_Reported_BO/BO_data_csv.csv": {
+      "required": 140,
+      "present": 140,
+      "missing_keys": []
+    },
+    "Data/DFT_Result/Active_Energy.csv": {
+      "required": 2333,
+      "present": 2333,
+      "missing_keys": []
+    },
+    "Data/DFT_Result/Active_Energy_for_AttFP.csv": {
+      "required": 2333,
+      "present": 2333,
+      "missing_keys": []
+    },
+    "Data/DFT_Result/Active_Energy_for_AttFP_with_FMO.csv": {
+      "required": 2333,
+      "present": 2333,
+      "missing_keys": []
+    },
+    "Data/DFT_Result/DFT_EXP.csv": {
+      "required": 11,
+      "present": 11,
+      "missing_keys": []
+    },
+    "Data/DFT_Result/Full_Space.csv": {
+      "required": 7536,
+      "present": 7536,
+      "missing_keys": []
+    },
+    "Data/DFT_Result/Rxn.csv": {
+      "required": 7504,
+      "present": 7504,
+      "missing_keys": []
+    },
+    "Data/DFT_Result/test.csv": {
+      "required": 819,
+      "present": 819,
+      "missing_keys": []
+    },
+    "Data/DFT_Result/train.csv": {
+      "required": 2204,
+      "present": 2204,
+      "missing_keys": []
+    },
+    "Data/DFT_Result/valid.csv": {
+      "required": 844,
+      "present": 844,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/1_deltaG.csv": {
+      "required": 4505,
+      "present": 4505,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/2_deltaGa.csv": {
+      "required": 2263,
+      "present": 2263,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/3_DropDimer.csv": {
+      "required": 1444,
+      "present": 1444,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/4_IEDDA_drop.csv": {
+      "required": 348,
+      "present": 348,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/4_IEDDA_select.csv": {
+      "required": 1166,
+      "present": 1166,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/5_DI_dropped.csv": {
+      "required": 1152,
+      "present": 1152,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/5_DI_selected.csv": {
+      "required": 81,
+      "present": 81,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/5_DI_selected_Reaxys_with_preparations.csv": {
+      "required": 32,
+      "present": 32,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/5_DI_selected_reaction_drawings/SI_figures/figure_manifest.csv": {
+      "required": 81,
+      "present": 81,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/6_DI_selected_Purchasable.csv": {
+      "required": 15,
+      "present": 15,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/6_DI_selected_Purchasable_DFT_pred.csv": {
+      "required": 15,
+      "present": 15,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/F4pi_threshold_sensitivity/additions_gt_055_all.csv": {
+      "required": 584,
+      "present": 584,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/F4pi_threshold_sensitivity/additions_gt_055_price_or_unregistered.csv": {
+      "required": 76,
+      "present": 76,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/F4pi_threshold_sensitivity/additions_gt_060_all.csv": {
+      "required": 155,
+      "present": 155,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/F4pi_threshold_sensitivity/additions_gt_060_price_or_unregistered.csv": {
+      "required": 15,
+      "present": 15,
+      "missing_keys": []
+    },
+    "Data/Predict_DI/F4pi_threshold_sensitivity/excluded_at_gt_066.csv": {
+      "required": 24,
+      "present": 24,
+      "missing_keys": []
+    },
+    "Data/Reported_BO/Reported Bioorthogonal Reactions for Selection.csv": {
+      "required": 138,
+      "present": 138,
+      "missing_keys": []
+    },
+    "Data/Reported_BO/Result_min_deltaGa_Solvent_vs_Report.csv": {
+      "required": 138,
+      "present": 138,
+      "missing_keys": []
+    },
+    "Data/Reported_BO/Result_min_deltaGa_Solvent_vs_Report_DieneEneScaffold_deduplicated_manual_deduplicated.csv": {
+      "required": 49,
+      "present": 49,
+      "missing_keys": []
+    },
+    "Data/ZINC_Data/target_diene_ene_Result.csv": {
+      "required": 11576,
+      "present": 11576,
+      "missing_keys": []
+    },
+    "Ignored/1_deltaG_selected.csv": {
+      "required": 2208,
+      "present": 2208,
+      "missing_keys": []
+    },
+    "Ignored/7_Potential_PAYN.csv": {
+      "required": 41,
+      "present": 41,
+      "missing_keys": []
+    }
+  }
+}

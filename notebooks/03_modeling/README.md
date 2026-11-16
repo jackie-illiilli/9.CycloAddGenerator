@@ -15,7 +15,17 @@ These notebooks cover model fitting, representation benchmarks, generalization t
 | 09_training_fraction_seeds.ipynb | Assess training-fraction and random-seed effects |
 | 10_ChemProp.ipynb | Run the ChemProp reaction-graph baseline |
 
-The notebooks use the saved energy tables in Data/DFT_Result and descriptor maps in Data/Descriptors. Configure paths and random seeds in each notebook before running it. ChemProp workflows require ChemProp and PyTorch Lightning in addition to the packages listed in requirements.txt.
+The notebooks use the saved energy tables in Data/DFT_Result and descriptor maps in Data/Descriptors. Configure paths and random seeds in each notebook before running it. The default environment is `main_py3_12` (Python 3.12), with dependencies in [requirements.txt](../../requirements.txt), including Hyperopt, ChemProp, PyTorch, and Lightning.
+
+**Run and test `03_fingerprint_generation.ipynb` only in `main` (Python 3.8).**
+Its DScribe-based descriptor code uses the existing legacy environment, including
+DScribe 1.2.1, ASE 3.22.0, Mordred 1.2.0, and NumPy 1.21.0. Select the `main`
+Python 3.8 notebook kernel and confirm `sys.executable` and `sys.version` before
+execution. Do not use `main_py3_12` for this notebook or install the root
+requirements into `main`. See the root [environment instructions](../../README.md#environment)
+for kernel registration and the current Python 3.12 environment's dependency
+conflicts. External conformers and pretrained maps are still needed for the
+optional representations.
 
 `02_main_cv_ablation.ipynb` defaults to reading cached CSV results from
 `Data/Model_Result/Main_CV_Ablation` without loading descriptors or training models.
@@ -36,7 +46,7 @@ CSV and provides the four legacy density plots through the same plotting functio
 These use `PLOT_REACTION_ENERGY`, read `reaction_energy/oof_predictions.csv`, and
 save figures under `reaction_energy/plots/` independently of main-model CV.
 
-The nested TPE search in 04_fingerprint_benchmark.ipynb requires Hyperopt, which is not pinned in requirements.txt (`pip install hyperopt`). By default, it tunes the PhysOrg + SVO representation with five-fold inner and outer validation; edit the notebook's selection settings to change the scope. This search is compute-intensive.
+The nested TPE search in 04_fingerprint_benchmark.ipynb requires Hyperopt, which is pinned in requirements.txt. By default, it tunes the PhysOrg + SVO representation with five-fold inner and outer validation; edit the notebook's selection settings to change the scope. This search is compute-intensive.
 
 ## Reproduction limits
 

@@ -16,7 +16,51 @@ The detailed notebook lists and required inputs are described in the guides for 
 
 ## Environment
 
-Use requirements.txt as a starting point for the Python environment. It is a legacy dependency list rather than a complete lock file. Some workflows require additional packages, including Hyperopt for fingerprint tuning, ChemProp, and PyTorch Lightning, as well as external Gaussian and xTB/CREST installations. Check the setup cells for the notebook being used.
+The default environment is **`main_py3_12` (Python 3.12; locally 3.12.7)**.
+[requirements.txt](requirements.txt) records the direct dependencies for this
+workflow, including Hyperopt and the ChemProp/Lightning baseline. It is not a
+complete environment lock file. For a new environment, use Python 3.12 and run
+`python -m pip install -r requirements.txt`, followed by `python -m pip check`.
+Select the `main_py3_12` interpreter/kernel when using the existing environment.
+
+The dependency list is based on the local environment, with one compatibility
+correction: NumPy is constrained to `>=1.26,<2.0` because the installed RDKit
+2024.3.3 declares `numpy<2.0`. The inspected environment has NumPy 2.5.0 and
+fails `pip check`; it also contains both Pandas 2.2.3 and 3.0.3 metadata, while
+the imported version is 3.0.3. The requirements use that imported Pandas version.
+These file updates do not repair or change the existing environment, and a fresh
+installation of the complete dependency list has not yet been validated.
+The local PyTorch build is `2.7.1+cu126`; the requirements pin the public version
+`2.7.1`, so reproducing GPU behavior also requires selecting the appropriate CUDA
+build and driver.
+
+**Exception: running or testing
+[03_fingerprint_generation.ipynb](notebooks/03_modeling/03_fingerprint_generation.ipynb)
+must use `main` (Python 3.8; locally 3.8.18), not `main_py3_12`.** This project's
+DScribe-based fingerprint workflow depends on the existing legacy environment.
+Its installed descriptor stack includes `dscribe==1.2.1`, `ase==3.22.0`,
+`mordred==1.2.0`, and `numpy==1.21.0`. Although `main_py3_12` has DScribe 2.1.1,
+it is not the supported environment for this notebook. Keep the two environments
+separate and do not install the Python 3.12 requirements into `main`.
+
+For interactive execution, select the `main` Python 3.8 kernel in Jupyter or VS
+Code; activating a terminal environment alone does not switch an open notebook's
+kernel. If the kernel is not available, register it with:
+
+```shell
+conda run -n main python -m ipykernel install --user --name main --display-name "main (Python 3.8)"
+```
+
+Before running the fingerprint notebook, check `sys.executable` and
+`sys.version` in its kernel to confirm that they point to `main` and Python 3.8.
+Full execution additionally needs the external conformer files and pretrained
+maps described in the [modeling guide](notebooks/03_modeling/README.md).
+
+PDF export in `notebooks/04_discovery/06_draw_selected_reactions.ipynb` additionally
+requires `reportlab` and `svglib` in its active kernel. Neither is installed in
+the inspected `main_py3_12` environment, so their versions are not pinned here.
+Gaussian and xTB/CREST remain external installations. Check each notebook's
+setup cells for its required inputs and optional tools.
 
 ## Data availability and reproducibility limits
 

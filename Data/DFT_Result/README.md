@@ -1,5 +1,21 @@
 # DFT results and transition-state coordinates
 
+## Consolidated reactant descriptors
+
+`Descriptors_Filter_merged.pkl` is the expanded, repository-informed descriptor
+subset: 5,325 molecules, 32,797 site records, and 19.26 MB. It retains all keys
+from the original `Descriptors_Filter.pkl` and all available sites for molecules
+referenced in the actual datasets, candidate lists and explicit notebook/code
+references. Shared keys use the full local `Ignored/Descriptors_.pkl` values;
+the old Filter has different area features and is preserved separately.
+
+See the [descriptor audit](descriptor_audit/README.md) for the selection rules,
+extracted Index lists, 81 missing raw-candidate indices, source/value differences,
+coverage checks and rebuild command. The existing modeling map and notebook
+paths remain unchanged.
+
+## Transition-state coordinates
+
 `all_ts.xyz` contains 8,273 transition-state geometries as concatenated XYZ
 frames. Frame 1 corresponds to the first data row of
 `Active_Energy_for_AttFP.csv`; every subsequent frame follows the CSV row order,
