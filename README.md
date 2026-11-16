@@ -1,4 +1,4 @@
-# Computational workflow for bioorthogonal [4+2] cycloaddition screening
+# Computational workflow for bioorthogonal [4+2] cycloaddition screeni
 
 This repository contains notebooks, helper code, and selected data tables for the computational workflow described in the accompanying manuscript.
 
